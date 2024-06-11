@@ -3,12 +3,22 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:ChatClient.ViewModels"
+			 xmlns:design="clr-namespace:ChatClient.ViewModels.Design"
+			 xmlns:views="clr-namespace:ChatClient.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ChatClient.Views.MainView"
              x:DataType="vm:MainViewModel">
-  <Design.DataContext>
-    <!-- This only sets the DataContext for the previewer in an IDE,
-         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-    <vm:MainViewModel />
-  </Design.DataContext>
+    <Design.DataContext>
+	    <design:MainViewModel />
+    </Design.DataContext>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" MinWidth="60" MaxWidth="400"/>
+			<ColumnDefinition Width="4"/>
+			<ColumnDefinition Width="4*"/>
+		</Grid.ColumnDefinitions>
+		<views:ChatsListView Grid.Column="0"/>
+		<GridSplitter Grid.Column="1" ResizeDirection="Columns"/>
+		<views:ChatView Grid.Column="2"/>
+	</Grid>
 </UserControl>
