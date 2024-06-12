@@ -15,6 +15,9 @@
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<StackPanel Orientation="Horizontal">
+						 
+						<!--TODO replace-->
+						<Image Source="{SvgImage /Assets/user-2-svgrepo-com.svg}" Width="24" Height="24"/>
 						<TextBlock Text="{Binding Name}"/>
 					</StackPanel>
 				</DataTemplate>
