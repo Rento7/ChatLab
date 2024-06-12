@@ -1,7 +1,9 @@
-﻿using ChatClient.Models;
+﻿using ChatClient.Commands;
+using ChatClient.Models;
 using ChatClient.ViewModels.Abstract;
 using ReactiveUI;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace ChatClient.ViewModels.Design;
 
@@ -28,5 +30,9 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel
         get => _fakeMessages;
         set => this.RaiseAndSetIfChanged(ref _fakeMessages, value);
     }
+
+    public ICommand SendMessageCommand => new EmptyCommand();
+
+ 
 }
 

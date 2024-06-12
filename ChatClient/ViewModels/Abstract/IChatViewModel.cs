@@ -1,10 +1,6 @@
-﻿using ChatClient.Models;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using ChatClient.Models;
+using System.Windows.Input;
 
 namespace ChatClient.ViewModels.Abstract
 {
@@ -12,5 +8,6 @@ namespace ChatClient.ViewModels.Abstract
     {
         string Name { get; set; }
         ObservableCollection<Message> Messages { get; set; }
+        ICommand SendMessageCommand { get; }
     }
 }

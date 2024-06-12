@@ -5,11 +5,13 @@ using ChatClient.Services;
 using ChatClient.ViewModels;
 using ChatClient.Views;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace ChatClient;
 
-public partial class App : Application
+public partial class App : Application, IDisposable
 {
+    IChatService _chatService = null!;
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -44,5 +46,16 @@ public partial class App : Application
         }
 
         base.OnFrameworkInitializationCompleted();
+
+        _chatService = services.GetService<IChatService>()!;
+        ArgumentNullException.ThrowIfNull(_chatService);
+
+        _chatService.ConnectToServer();
+    }
+
+    public void Dispose()
+    {
+        if (_chatService is IDisposable disposable)
+            disposable.Dispose();
     }
 }

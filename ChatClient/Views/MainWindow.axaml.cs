@@ -1,8 +1,10 @@
 ﻿using Avalonia.Controls;
+using Avalonia.ReactiveUI;
+using ChatClient.ViewModels;
 
 namespace ChatClient.Views;
 
-public partial class MainWindow : Window
+internal partial class MainWindow : ReactiveWindow<MainViewModel>
 {
     public MainWindow()
     {
