@@ -1,11 +1,14 @@
 ﻿using ChatClient.Models;
+using ChatClient.ViewModels.Abstract;
 using ReactiveUI;
 using System.Collections.ObjectModel;
 
 namespace ChatClient.ViewModels.Design;
 
-internal class ChatViewModel : ViewModels.ChatViewModel
+internal class ChatViewModel : ViewModelBase, IChatViewModel
 {
+    string _name = "design chat name";
+
     ObservableCollection<Message> _fakeMessages = new ObservableCollection<Message>() 
     {
         new Message() { Text = "Message 11111111" },
@@ -14,16 +17,16 @@ internal class ChatViewModel : ViewModels.ChatViewModel
         new Message() { Text = "Message 44444444 o0o" },
     };
 
-    public override string Name 
+    public string Name 
     {
-        get => "Chat name";
-        set { }  
+        get => _name;
+        set => this.RaiseAndSetIfChanged(ref _name, value);
     }
 
-    public override ObservableCollection<Message> Messages 
+    public ObservableCollection<Message> Messages 
     { 
         get => _fakeMessages;
-        set { }
+        set => this.RaiseAndSetIfChanged(ref _fakeMessages, value);
     }
 }
 

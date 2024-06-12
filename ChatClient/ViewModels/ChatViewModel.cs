@@ -1,24 +1,51 @@
-﻿using ChatClient.Models;
-using ReactiveUI;
+﻿using System;
 using System.Collections.ObjectModel;
+using System.Reactive;
+using ReactiveUI;
+using ChatClient.Models;
+using ChatClient.Services;
+using ChatClient.ViewModels.Abstract;
 
-namespace ChatClient.ViewModels
+namespace ChatClient.ViewModels;
+
+internal class ChatViewModel : ViewModelBase, IChatViewModel
 {
-    internal class ChatViewModel : Abstract.ViewModelBase
+    ObservableCollection<Message> _messages;
+    string _name = string.Empty;
+    string _messageText = string.Empty;
+    public ChatViewModel(IUIService uiService)
     {
-        ObservableCollection<Message> _messages;
-        string _name;
+        _messages = new ObservableCollection<Message>();
 
-        public virtual ObservableCollection<Message> Messages
-        {
-            get => _messages;
-            set => this.RaiseAndSetIfChanged(ref _messages, value);
-        }
+        IObservable<bool> isInputValid = this.WhenAnyValue(
+            x => x.MessageText,
+            msg => !string.IsNullOrWhiteSpace(msg)
+            );
 
-        public virtual string Name
+        SendMessageCommand = ReactiveCommand.Create(() =>
         {
-            get => _name;
-            set => this.RaiseAndSetIfChanged(ref _name, value);
-        }
+            _messages.Add(new Message() { Text = MessageText });
+        }, isInputValid);
     }
+
+    public ObservableCollection<Message> Messages
+    {
+        get => _messages;
+        set => this.RaiseAndSetIfChanged(ref _messages, value);
+    }
+
+    public string Name
+    {
+        get => _name;
+        set => this.RaiseAndSetIfChanged(ref _name, value);
+    }
+
+    public string MessageText 
+    {
+        get => _messageText;
+        set => this.RaiseAndSetIfChanged(ref _messageText, value);
+    }
+
+    public ReactiveCommand<Unit, Unit> SendMessageCommand { get; }
+
 }

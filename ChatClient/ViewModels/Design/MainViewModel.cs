@@ -1,5 +1,14 @@
-﻿namespace ChatClient.ViewModels.Design;
+﻿using ChatClient.ViewModels.Abstract;
 
-internal class MainViewModel : ViewModels.MainViewModel
-{
+namespace ChatClient.ViewModels.Design;
+
+internal class MainViewModel : ViewModelBase, IMainViewModel 
+{ 
+    public IChatsListViewModel ChatsListViewModel => new Design.ChatsListViewModel();
+
+    public IChatViewModel SelectedChatViewModel 
+    {
+        get => new Design.ChatViewModel();
+        set { } 
+    }
 }

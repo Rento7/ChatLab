@@ -1,12 +1,11 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="ChatClient.App"
+			 xmlns:local="using:ChatClient"
              RequestedThemeVariant="Dark">
     <Application.Styles>
 		<!-- using this theme for designer preview-->
 		<FluentTheme />
-
 		<StyleInclude Source="avares://Semi.Avalonia/Themes/Index.axaml" />
-		
     </Application.Styles>
 </Application>

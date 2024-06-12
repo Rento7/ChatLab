@@ -1,12 +1,21 @@
-﻿using ReactiveUI;
+﻿using ChatClient.Services;
+using ChatClient.ViewModels.Abstract;
+using ReactiveUI;
 using System.Collections.ObjectModel;
 
 namespace ChatClient.ViewModels;
-internal class ChatsListViewModel : Abstract.ViewModelBase
+internal class ChatsListViewModel : ViewModelBase, IChatsListViewModel
 {
-    ObservableCollection<ChatViewModel> _chats;
+    IUIService _uiService;
 
-    public virtual ObservableCollection<ChatViewModel> Chats 
+    ObservableCollection<IChatViewModel> _chats = new ObservableCollection<IChatViewModel>();
+
+    public ChatsListViewModel(IUIService uiService) 
+    {
+        _uiService = uiService;
+    }
+
+    public ObservableCollection<IChatViewModel> Chats 
     { 
         get => _chats; 
         set => this.RaiseAndSetIfChanged(ref _chats, value); 

@@ -17,8 +17,8 @@
 			<ColumnDefinition Width="4"/>
 			<ColumnDefinition Width="4*"/>
 		</Grid.ColumnDefinitions>
-		<views:ChatsListView Grid.Column="0"/>
+		<views:ChatsListView Grid.Column="0" DataContext="{Binding ChatsListViewModel}"/>
 		<GridSplitter Grid.Column="1" ResizeDirection="Columns"/>
-		<views:ChatView Grid.Column="2"/>
+		<views:ChatView Grid.Column="2" DataContext="{Binding SelectedChatViewModel}"/>
 	</Grid>
 </UserControl>

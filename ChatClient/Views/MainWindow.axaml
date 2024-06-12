@@ -8,5 +8,5 @@
         x:Class="ChatClient.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="ChatClient">
-        <views:MainView />
+        <views:MainView/>
 </Window>

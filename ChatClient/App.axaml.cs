@@ -20,7 +20,10 @@ public partial class App : Application
         var collection = new ServiceCollection();
         collection.AddSingleton<IUIService, UIService>();
         collection.AddSingleton<IChatService, ChatService>();
+
         collection.AddTransient<MainViewModel>();
+        collection.AddTransient<ChatViewModel>();
+        collection.AddTransient<ChatsListViewModel>();
 
         var services = collection.BuildServiceProvider();
         var vm = services.GetRequiredService<MainViewModel>();

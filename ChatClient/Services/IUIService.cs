@@ -1,6 +1,9 @@
-﻿namespace ChatClient.Services;
+﻿using ChatClient.ViewModels.Abstract;
 
-public interface IUIService
+namespace ChatClient.Services;
+
+internal interface IUIService
 {
+    T GetViewModel<T>() where T : ViewModelBase;
 }
 

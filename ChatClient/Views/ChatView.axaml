@@ -10,10 +10,11 @@
 	<Design.DataContext>
 		<design:ChatViewModel />
 	</Design.DataContext>
+
 	<DockPanel>
 		<DockPanel DockPanel.Dock="Bottom" MaxHeight="240">
-			<Button DockPanel.Dock="Right" VerticalAlignment="Bottom">Send</Button>
-			<TextBox TextWrapping="Wrap" />
+			<Button DockPanel.Dock="Right" VerticalAlignment="Bottom" Command="{Binding SendMessageCommand}">Send</Button>
+			<TextBox Text="{Binding MessageText}" TextWrapping="Wrap"  />
 		</DockPanel>
 		
 		<Grid>
