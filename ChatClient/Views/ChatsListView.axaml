@@ -10,6 +10,15 @@
 	<Design.DataContext>
 		<design:ChatsListViewModel />
 	</Design.DataContext>
-
-	
+	<Grid>
+		<ListBox ItemsSource="{Binding Chats}">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{Binding Name}"/>
+					</StackPanel>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	</Grid>
 </UserControl>

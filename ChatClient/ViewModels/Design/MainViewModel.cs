@@ -1,5 +1,5 @@
 ﻿namespace ChatClient.ViewModels.Design;
 
-internal class MainViewModel : Abstract.MainViewModel
+internal class MainViewModel : ViewModels.MainViewModel
 {
 }

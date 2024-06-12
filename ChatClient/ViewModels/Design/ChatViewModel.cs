@@ -1,5 +1,9 @@
-﻿namespace ChatClient.ViewModels.Design;
+﻿using ReactiveUI;
 
-internal class ChatViewModel : Abstract.ChatsListViewModel
+namespace ChatClient.ViewModels.Design;
+
+internal class ChatViewModel : ViewModels.ChatViewModel
 {
+
 }
+
