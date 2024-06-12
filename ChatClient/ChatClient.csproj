@@ -22,8 +22,4 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Semi.Avalonia" Version="11.0.7.3" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
 </Project>

@@ -11,13 +11,28 @@
 		<design:ChatViewModel />
 	</Design.DataContext>
 	<DockPanel>
-		<!--TODO Add messages-->
-		
 		<DockPanel DockPanel.Dock="Bottom" MaxHeight="240">
 			<Button DockPanel.Dock="Right" VerticalAlignment="Bottom">Send</Button>
 			<TextBox TextWrapping="Wrap" />
 		</DockPanel>
 		
-		<ListBox></ListBox>
+		<Grid>
+			<ListBox ItemsSource="{Binding Messages}">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Text="{Binding Text}"/>
+						</StackPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+
+				<ListBox.ItemsPanel>
+					<ItemsPanelTemplate>
+						<!-- TODO change, test purpose only -->
+						<StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+					</ItemsPanelTemplate>
+				</ListBox.ItemsPanel>
+			</ListBox>
+		</Grid>
 	</DockPanel>
 </UserControl>
