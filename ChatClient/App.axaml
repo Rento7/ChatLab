@@ -3,11 +3,10 @@
              x:Class="ChatClient.App"
              RequestedThemeVariant="Dark">
     <Application.Styles>
-		<FluentTheme>
-			<FluentTheme.Palettes>
-				<!-- Palette for Dark theme variant -->
-				<ColorPaletteResources x:Key="Dark" Accent="Purple" RegionColor="#171B2D" ErrorText="Orange"/>
-			</FluentTheme.Palettes>
-		</FluentTheme>
+		<!-- using this theme for designer preview-->
+		<FluentTheme />
+
+		<StyleInclude Source="avares://Semi.Avalonia/Themes/Index.axaml" />
+		
     </Application.Styles>
 </Application>

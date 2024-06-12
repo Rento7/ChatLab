@@ -15,15 +15,7 @@
 		
 		<DockPanel DockPanel.Dock="Bottom" MaxHeight="240">
 			<Button DockPanel.Dock="Right" VerticalAlignment="Bottom">Send</Button>
-			<TextBox TextWrapping="Wrap">
-				<TextBox.Styles>
-					<Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
-						<Setter Property="Background">
-							<SolidColorBrush Color=""/>
-						</Setter>
-					</Style>
-				</TextBox.Styles>	
-			</TextBox>
+			<TextBox TextWrapping="Wrap" />
 		</DockPanel>
 		
 		<ListBox></ListBox>
