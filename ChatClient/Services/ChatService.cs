@@ -118,6 +118,8 @@ internal class ChatService : IChatService, IDisposable
             access_token = jResult.GetValue(nameof(access_token)).ToString();
 
             ConnectToServer();
+
+            _uiService.OnLoginSuccessfully();
         }
         else 
         {

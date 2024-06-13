@@ -2,10 +2,11 @@
 using ChatClient.ViewModels.Abstract;
 using ChatClient.ViewModels.Design;
 using ReactiveUI;
+using System;
 
 namespace ChatClient.ViewModels
 {
-    internal class MainWindowViewModel : ViewModelBase
+    internal class MainWindowViewModel : ViewModelBase, IDisposable
     {
         IChatService _chatService;
         IUIService _uiService;
@@ -25,12 +26,23 @@ namespace ChatClient.ViewModels
             _mainViewModel = _uiService.GetViewModel<MainViewModel>();
 
             _currentPage = _loginPageViewModel;
+
+            _chatService.LoginSuccessfully += _chatService_LoginSuccessfully;
+        }
+
+        private void _chatService_LoginSuccessfully(object? sender, EventArgs e)
+        {
+            CurrentPage = _mainViewModel;
         }
 
         public ViewModelBase CurrentPage
         {
             get => _currentPage; 
             set => this.RaiseAndSetIfChanged(ref _currentPage, value); 
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

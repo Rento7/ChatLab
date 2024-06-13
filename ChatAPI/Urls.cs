@@ -10,7 +10,7 @@ namespace ChatAPI
     public static class Urls
     {
         public const string BaseUrl = "http://localhost:5177/";
-        public const string ChatUrl = BaseUrl + "/chat";
-        public const string LoginUrl = BaseUrl + "/login";
+        public const string ChatUrl = BaseUrl + "chat";
+        public const string LoginUrl = BaseUrl + "login";
     }
 }
