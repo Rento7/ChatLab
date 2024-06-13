@@ -23,12 +23,17 @@ public partial class App : Application, IDisposable
         collection.AddSingleton<IUIService, UIService>();
         collection.AddSingleton<IChatService, ChatService>();
 
+        collection.AddTransient<MainWindowViewModel>();
+
+        collection.AddTransient<LoginPageViewModel>();
+        collection.AddTransient<RegistrationPageViewModel>();
+
         collection.AddTransient<MainViewModel>();
         collection.AddTransient<ChatViewModel>();
         collection.AddTransient<ChatsListViewModel>();
 
         var services = collection.BuildServiceProvider();
-        var vm = services.GetRequiredService<MainViewModel>();
+        var vm = services.GetRequiredService<MainWindowViewModel>();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
@@ -49,8 +54,6 @@ public partial class App : Application, IDisposable
 
         _chatService = services.GetService<IChatService>()!;
         ArgumentNullException.ThrowIfNull(_chatService);
-
-        _chatService.ConnectToServer();
     }
 
     public void Dispose()

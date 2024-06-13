@@ -1,5 +1,7 @@
-﻿using ChatClient.ViewModels.Abstract;
+﻿using ChatClient.Utility;
+using ChatClient.ViewModels.Abstract;
 using System;
+using System.Net;
 
 namespace ChatClient.Services;
 
@@ -11,5 +13,9 @@ internal interface IUIService
 internal interface IUIServiceInternal : IUIService
 {
     event EventHandler<string> MessageReceived;
-    void ReceiveMessage(string message);
+    event EventHandler<LoginEventArgs> LoginUnsuccessfully;
+    event EventHandler LoginSuccessfully;
+    void OnMessageReceived(string message);
+    void OnLoginSuccessfully();
+    void OnLoginUnsuccessfully(LoginEventArgs args);
 }
