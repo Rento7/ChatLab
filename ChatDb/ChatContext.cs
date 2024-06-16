@@ -35,6 +35,11 @@ public class ChatContext : DbContext
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            entity.HasMany<Message>()
+                .WithOne(e => e.Sender)
+                .HasForeignKey(e => e.SenderId)
+                .IsRequired();
+
             entity.HasMany(e => e.Chats).WithMany(e => e.Users);
         });
 
@@ -71,7 +76,10 @@ public class ChatContext : DbContext
                 .HasForeignKey(e => e.ChatId)
                 .IsRequired();
 
-            entity.HasOne(e => e.Sender).WithOne();
+            entity.HasOne(e => e.Sender)
+                .WithMany()
+                .HasForeignKey(e => e.SenderId)
+                .IsRequired();
         });
     }
 }

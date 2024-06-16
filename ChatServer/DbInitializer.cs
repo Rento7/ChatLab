@@ -60,6 +60,84 @@ namespace ChatServer
             users[2].Contacts.Add(users[0]);
 
             context.SaveChanges();
+
+            var chats = new List<Chat>();
+            var chat = new Chat() { Name = "Chat 1" };
+            chat.Users.Add(users[0]);
+            chat.Users.Add(users[1]);
+            chats.Add(chat);
+
+            chat = new Chat() { Name = "Chat 2" };
+            chat.Users.Add(users[0]);
+            chat.Users.Add(users[2]);
+            chats.Add(chat);
+
+            context.Chats.AddRange(chats);
+            context.SaveChanges();
+
+            chats = context.Chats.ToList();
+
+            var message = new Message()
+            {
+                Text = "first message",
+                Chat = chats[0],
+                ChatId = chats[0].Id,
+                Sender = users[1],
+                SenderId = users[1].Id,
+            };
+            context.Messages.Add(message);
+
+            message = new Message()
+            {
+                Text = "second message",
+                Chat = chats[0],
+                ChatId = chats[0].Id,
+                Sender = users[1],
+                SenderId = users[1].Id,
+            };
+            context.Messages.Add(message);
+
+            message = new Message()
+            {
+                Text = "third message",
+                Chat = chats[0],
+                ChatId = chats[0].Id,
+                Sender = users[0],
+                SenderId = users[0].Id,
+            };
+            context.Messages.Add(message);
+
+            message = new Message()
+            {
+                Text = "fourth message",
+                Chat = chats[0],
+                ChatId = chats[0].Id,
+                Sender = users[1],
+                SenderId = users[1].Id,
+            };
+            context.Messages.Add(message);
+
+            message = new Message()
+            {
+                Text = "first message",
+                Chat = chats[1],
+                ChatId = chats[1].Id,
+                Sender = users[0],
+                SenderId = users[0].Id,
+            };
+            context.Messages.Add(message);
+
+            message = new Message()
+            {
+                Text = "second message",
+                Chat = chats[1],
+                ChatId = chats[0].Id,
+                Sender = users[2],
+                SenderId = users[2].Id,
+            };
+            context.Messages.Add(message);
+
+            context.SaveChanges();
         }
     }
 }

@@ -118,6 +118,7 @@ public class Program
         {
             var chatApiGroup = app.MapGroup("/chatapi");
             chatApiGroup.MapGet("/users", ChatApi.GetUsers);
+            chatApiGroup.MapGet("/chats", ChatApi.GetChats);
         }
 
         app.Run();
