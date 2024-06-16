@@ -5,6 +5,7 @@ using System.Reflection;
 using Microsoft.Extensions.Caching.Memory;
 using ChatDb;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using System.Text.Json.Serialization;
 
 namespace ChatServer;
 
@@ -25,6 +26,8 @@ public class Program
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+            builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>
+                (options => options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
         }
 
         if (builder.Environment.EnvironmentName != DevelopmentSwagger)
@@ -69,6 +72,7 @@ public class Program
         builder.Services.AddScoped<IChatRepository, ChatRepository>();
 
 
+
         var app = builder.Build();
 
         //init db
@@ -91,11 +95,11 @@ public class Program
         {
             app.UseSwagger();
             app.UseSwaggerUI();
-            //app.UseSwaggerUI(o => 
-            //{
-            //    o.DefaultModelRendering(ModelRendering.Model);
-            //    o.DefaultModelExpandDepth(2);
-            //});
+            app.UseSwaggerUI(o =>
+            {
+                o.DefaultModelRendering(ModelRendering.Model);
+                o.DefaultModelExpandDepth(1);
+            });
         }
 
         app.UseDefaultFiles();

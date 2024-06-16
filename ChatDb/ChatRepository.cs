@@ -14,10 +14,8 @@ public class ChatRepository : IChatRepository, IDisposable
 
     public async Task<IEnumerable<User>> GetUsers() 
     {
-        var users = await _context.Users.ToListAsync();
-        return users;
+        return await _context.Users.Include(o => o.Contacts).ToListAsync();
     }
-    
 
     protected virtual void Dispose(bool disposing)
     {
