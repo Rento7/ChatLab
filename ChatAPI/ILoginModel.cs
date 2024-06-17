@@ -1,4 +1,4 @@
-﻿namespace ChatAPI.Models;
+﻿namespace ChatAPI;
 
 public interface ILoginModel
 {

@@ -6,6 +6,8 @@ using Microsoft.Extensions.Caching.Memory;
 using ChatDb;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Text.Json.Serialization;
+using ChatServer.Services;
+using Microsoft.AspNetCore.SignalR;
 
 namespace ChatServer;
 
@@ -25,13 +27,18 @@ public class Program
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
-            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-            builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>
-                (options => options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
         }
+
+        builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+        builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>
+            (options => options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+        builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
         if (builder.Environment.EnvironmentName != DevelopmentSwagger)
         {
+            builder.Services.AddSingleton<IUserIdProvider, UserIdProvider>();
             builder.Services.AddAuthorization();
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -66,12 +73,9 @@ public class Program
             builder.Services.AddSignalR();
         }
 
-
         builder.Services.AddDbContext<ChatContext>(options =>
                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
         builder.Services.AddScoped<IChatRepository, ChatRepository>();
-
-
 
         var app = builder.Build();
 
@@ -117,8 +121,8 @@ public class Program
         else
         {
             var chatApiGroup = app.MapGroup("/chatapi");
-            chatApiGroup.MapGet("/users", ChatApi.GetUsers);
-            chatApiGroup.MapGet("/chats", ChatApi.GetChats);
+            chatApiGroup.MapGet("/users", TestChatApi.GetUsers);
+            chatApiGroup.MapGet("/chats", TestChatApi.GetChats);
         }
 
         app.Run();

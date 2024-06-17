@@ -1,31 +1,25 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using ChatAPI.Models;
+using ChatDb;
+using ChatServer.Models;
+using ChatDb.Models;
 
 namespace ChatServer
 {
-    public class TestLoginModel : ILoginModel
-    {
-        public string Login { get; set; } = null!;
-
-        public string Password { get; set; } = null!;
-    }
-
-
     public static class AuthorizationApi
     {
-        public static async Task<IResult> Login(TestLoginModel user)
+        public static async Task<IResult> Login(IChatRepository repository, LoginModel loginModel)
         {
-            var loginData = CreateTestLoginData();
+            //TODO change
+            var usres = await repository.GetUsersAsync();
 
-            TestLoginModel? authorizedUser = loginData.FirstOrDefault(u => u.Login ==
-                user.Login && u.Password == user.Password);
+            User user = usres.FirstOrDefault(u => u.Login == loginModel.Login && u.Password == loginModel.Password);
 
-            if (authorizedUser is null)
+            if (user is null)
                 return Results.Unauthorized();
 
-            var claims = new List<Claim> { new Claim(ClaimTypes.Name, authorizedUser.Login) };
+            var claims = new List<Claim> { new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()) };
 
             var jwt = new JwtSecurityToken(
                     issuer: AuthOptions.ISSUER,
@@ -41,19 +35,11 @@ namespace ChatServer
             var response = new
             {
                 access_token = encodedJwt,
-                username = authorizedUser.Login
+                username = user.Login,
+                userId = user.Id
             };
 
             return Results.Json(response);
-        }
-
-        static List<TestLoginModel> CreateTestLoginData()
-        {
-            return new List<TestLoginModel>()
-            {
-                new TestLoginModel() { Login = "user1", Password = "user1"},
-                new TestLoginModel() { Login = "user2", Password = "user2"},
-            };
         }
     }
 }

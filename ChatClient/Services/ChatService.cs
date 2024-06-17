@@ -1,22 +1,23 @@
-﻿using Avalonia.Threading;
-using ChatAPI;
-using ChatClient.Utility;
-using Microsoft.AspNetCore.SignalR.Client;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
-using System.Windows;
+using Microsoft.AspNetCore.SignalR.Client;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using ChatAPI;
+using ChatClient.Models;
+using ChatClient.Utility;
+using ChatAPI.Models;
 
 namespace ChatClient.Services;
 
-internal class ChatService : IChatService, IDisposable
+internal partial class ChatService : IChatService, IDisposable, IClientApi
 {
     IUIServiceInternal _uiService;
     HubConnection _connection = null!;
     string access_token;
+    User _user;
 
     public ChatService(IUIService uiService) 
     {
@@ -30,7 +31,7 @@ internal class ChatService : IChatService, IDisposable
             })
             .Build();
 
-        _connection.On<string>("Receive", message => _uiService.OnMessageReceived(message));
+        _connection.On<User>(nameof(IClientApi.InitUser), InitUser);
     }
 
     public event EventHandler<string> MessageReceived
@@ -75,6 +76,7 @@ internal class ChatService : IChatService, IDisposable
         }
     }
 
+
     public async Task Login(string _login, string _password)
     {
         var httpWebRequest = (HttpWebRequest)WebRequest.Create(Urls.LoginUrl);
@@ -118,6 +120,7 @@ internal class ChatService : IChatService, IDisposable
             access_token = jResult.GetValue(nameof(access_token)).ToString();
 
             ConnectToServer();
+            await _connection.InvokeAsync("RequestUser");
 
             _uiService.OnLoginSuccessfully();
         }
@@ -125,6 +128,11 @@ internal class ChatService : IChatService, IDisposable
         {
             _uiService.OnLoginUnsuccessfully(new LoginEventArgs() { SuccessfulConnection = false, StatusCode = response.StatusCode });
         }
+    }
+
+    public void InitUser(IUser user)
+    {
+        _user = (User)user;
     }
 
     public void Dispose()

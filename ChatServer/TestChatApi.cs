@@ -3,7 +3,7 @@
 namespace ChatServer
 {
     //test purpose
-    public static class ChatApi
+    public static class TestChatApi
     {
         public static async Task<IResult> GetUsers(IChatRepository repository)
         {
