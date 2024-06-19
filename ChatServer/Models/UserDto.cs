@@ -7,6 +7,7 @@ namespace ChatServer.Models
         public Guid Id { get; set; }
         public string Name { get; set; } = null!;
         public string Login { get; set; } = null!;
-        public string Password { get; set; } = null!;
+        public List<IContactUser> Contacts { get; set; } = null!;
+        public List<IChat> Chats { get; set; } = null!;
     }
 }

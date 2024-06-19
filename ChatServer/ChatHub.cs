@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.SignalR;
 using ChatDb;
 using ChatAPI;
 using ChatServer.Models;
+using ChatServer.Extensions;
 
 namespace ChatServer
 {
@@ -15,7 +16,6 @@ namespace ChatServer
             _repository = chatRepository;
         }
 
-
         public async Task Send(string message)
         {
             await Clients.All.SendAsync("Receive", message);
@@ -26,16 +26,7 @@ namespace ChatServer
             if (Context.UserIdentifier is string id)
             {
                 var user = await _repository.GetUserAsync(Guid.Parse(id));
-
-                var userDto = new UserDto()
-                {
-                    Id = user.Id,
-                    Login = user.Login,
-                    Name = user.Name,
-                    Password = user.Password,
-                };
-
-                await Clients.User(id).SendAsync(nameof(IClientApi.InitUser), userDto);
+                await Clients.User(id).SendAsync(nameof(IClientApi.InitUser), user.ToDto());
             }
         }
     }

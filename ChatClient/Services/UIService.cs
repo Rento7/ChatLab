@@ -1,4 +1,5 @@
 ﻿using Avalonia.Threading;
+using ChatAPI.Models;
 using ChatClient.Models;
 using ChatClient.Utility;
 using ChatClient.ViewModels;
@@ -22,6 +23,7 @@ internal class UIService : IUIServiceInternal
     public event EventHandler<string> MessageReceived;
     public event EventHandler LoginSuccessfully;
     public event EventHandler<LoginEventArgs> LoginUnsuccessfully;
+    public event EventHandler<IUser> UserInitialized;
 
     public T GetViewModel<T>() where T : ViewModelBase
     {
@@ -54,5 +56,14 @@ internal class UIService : IUIServiceInternal
             LoginUnsuccessfully?.Invoke(this, args);
         });
     }
+
+    public void OnUserInitialized(IUser user) 
+    {
+        Dispatcher.UIThread.Invoke(() =>
+        {
+            UserInitialized?.Invoke(this, IUser);
+        });
+    }
+
 }
 

@@ -9,7 +9,7 @@ internal class MainViewModel : ViewModelBase, IMainViewModel
     ChatsListViewModel _chatListViewModel;
     ChatViewModel _chatViewModel;
 
-    public MainViewModel(IUIService uiService)
+    public MainViewModel(IChatService chatService, IUIService uiService)
     {
         _chatListViewModel = uiService.GetViewModel<ChatsListViewModel>();
         _chatViewModel = uiService.GetViewModel<ChatViewModel>();

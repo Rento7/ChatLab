@@ -10,7 +10,7 @@ internal class ChatsListViewModel : ViewModelBase, IChatsListViewModel
 
     ObservableCollection<IChatViewModel> _chats = new ObservableCollection<IChatViewModel>();
 
-    public ChatsListViewModel(IUIService uiService) 
+    public ChatsListViewModel(IChatService chatService, IUIService uiService) 
     {
         _uiService = uiService;
     }

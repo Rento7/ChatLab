@@ -8,6 +8,7 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Text.Json.Serialization;
 using ChatServer.Services;
 using Microsoft.AspNetCore.SignalR;
+using ChatServer.Data;
 
 namespace ChatServer;
 

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ChatAPI.Models;
+using System;
 
 namespace ChatClient.Models
 {
-    internal class Message
+    internal class Message : IMessage
     {
-        public string Text { get; set; } = null!;
+        public Guid Id { get; set; }
+        public string Text { get; set; }
+        public Guid SenderId { get; set; }
+        public Guid ChatId { get; set; }
     }
 }

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 namespace ChatClient.Services;
 
+//TODO change;
+
 public interface IChatService
 {
     Task ConnectToServer();

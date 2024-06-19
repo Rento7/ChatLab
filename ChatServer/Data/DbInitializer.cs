@@ -1,7 +1,7 @@
 ﻿using ChatDb;
 using ChatDb.Models;
 
-namespace ChatServer
+namespace ChatServer.Data
 {
     public class DbInitializer
     {
