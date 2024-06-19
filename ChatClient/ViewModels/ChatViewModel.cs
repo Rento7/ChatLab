@@ -69,7 +69,7 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
 
     private void _chatService_MessageReceived(object? sender, Message message)
     {
-        //_messages.Add(new Message() { Text = message });
+        _messages.Add(new MessageItemViewModel(message));
     }
 
     public ObservableCollection<IMessageItemViewModel> Messages

@@ -58,6 +58,7 @@ public class ChatRepository : IChatRepository, IDisposable
         if (chat != null)
         {
             await _context.Entry(chat).Collection(c => c.Messages).LoadAsync();
+            await _context.Entry(chat).Collection(c => c.Users).LoadAsync();
         }
 
         return chat!;
@@ -81,6 +82,11 @@ public class ChatRepository : IChatRepository, IDisposable
         }
 
         return messages;
+    }
+
+    public async Task<Message> GetMessageByIdAsync(Guid id)
+    {
+        return await _context.Messages.FindAsync(id);
     }
 
     public async Task CreateUserAsync(User user)

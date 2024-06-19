@@ -11,7 +11,7 @@ public interface IChatRepository
     Task<Chat> GetChatByIdAsync(Guid id);
     Task<IEnumerable<Message>> GetMessagesAsync();
     Task<IEnumerable<Message>> GetMessagesByChatAsync(Guid chatId);
-
+    Task<Message> GetMessageByIdAsync(Guid id);
     Task CreateUserAsync(User user);
     Task CreateChatAsync(Chat chat);
     Task CreateMessageAsync(Message message);

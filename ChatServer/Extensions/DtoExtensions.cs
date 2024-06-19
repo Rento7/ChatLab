@@ -68,4 +68,16 @@ public static class DtoExtensions
 
         return userDto;
     }
+
+    public static Message FromDto(this Dto.Message messageDto) 
+    {
+        var message = new Message()
+        {
+            Text = messageDto.Text,
+            ChatId = messageDto.ChatId,
+            SenderId = messageDto.SenderId
+        };
+
+        return message;
+    }   
 }

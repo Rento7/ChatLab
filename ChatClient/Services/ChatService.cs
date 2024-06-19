@@ -30,7 +30,8 @@ internal partial class ChatService : IChatService, IDisposable
             })
             .Build();
 
-        _connection.On<User>("InitUser", InitUser);
+        _connection.On<User>(nameof(IClientApi.InitUser), InitUser);
+        _connection.On<Message>(nameof(IClientApi.ReceiveMessage), ReceiveMessage);
     }
 
     public async Task ConnectToServer()

@@ -38,7 +38,12 @@ namespace ChatClient.Services
             _user = user;
             _uiService.OnUserInitialized(_user);
         }
- 
+
+        public void ReceiveMessage(Message message) 
+        {
+            _uiService.OnMessageReceived(message);
+        }
+
         public void Test(string test)
         {
             var helloSignalR = test;
@@ -46,14 +51,7 @@ namespace ChatClient.Services
 
         public async Task SendMessage(Message message)
         {
-            try
-            {
-                await _connection.InvokeAsync(nameof(IServerApi.SendMessage), message);
-            }
-            catch (Exception ex)
-            {
-                //TODO
-            }
+            await _connection.InvokeAsync(nameof(IServerApi.SendMessage), message);
         }
     }
 }
