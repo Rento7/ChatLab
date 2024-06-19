@@ -1,14 +1,14 @@
-﻿using ChatAPI.Models;
-using ChatDb.Models;
-using ChatServer.Models;
+﻿using ChatDb.Models;
+
+using Dto = ChatAPI.Models;
 
 namespace ChatServer.Extensions;
 
 public static class DtoExtensions
 {
-    public static MessageDto ToDto(this Message message) 
+    public static Dto.Message ToDto(this Message message) 
     {
-        var messageDto = new MessageDto()
+        var messageDto = new Dto.Message()
         {
             Id = message.Id,
             Text = message.Text,
@@ -19,9 +19,9 @@ public static class DtoExtensions
         return messageDto;
     }
 
-    public static ContactUserDto ToContactDto(this User user)
+    public static Dto.ContactUser ToContactDto(this User user)
     {
-        var contactUserDto = new ContactUserDto()
+        var contactUserDto = new Dto.ContactUser()
         {
             Id = user.Id,
             Name = user.Name,
@@ -30,14 +30,14 @@ public static class DtoExtensions
         return contactUserDto;
     }
 
-    public static ChatDto ToDto(this Chat chat)
+    public static Dto.Chat ToDto(this Chat chat)
     {
-        var chatDto = new ChatDto()
+        var chatDto = new Dto.Chat()
         {
             Id = chat.Id,
             Name = chat.Name,
-            Messages = new List<IMessage>(),
-            Users = new List<IContactUser>(),
+            Messages = new List<Dto.Message>(),
+            Users = new List<Dto.ContactUser>(),
         };
 
         foreach (var message in chat.Messages)
@@ -49,15 +49,15 @@ public static class DtoExtensions
         return chatDto;
     }
 
-    public static UserDto ToDto(this User user)
+    public static Dto.User ToDto(this User user)
     {
-        var userDto = new UserDto()
+        var userDto = new Dto.User()
         {
             Id = user.Id,
             Name = user.Name,
             Login = user.Login,
-            Chats = new List<IChat>(),
-            Contacts = new List<IContactUser>(),
+            Chats = new List<Dto.Chat>(),
+            Contacts = new List<Dto.ContactUser>(),
         };
 
         foreach (var chat in user.Chats)

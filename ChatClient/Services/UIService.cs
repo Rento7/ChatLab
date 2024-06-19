@@ -1,13 +1,9 @@
-﻿using Avalonia.Threading;
-using ChatAPI.Models;
-using ChatClient.Models;
-using ChatClient.Utility;
-using ChatClient.ViewModels;
-using ChatClient.ViewModels.Abstract;
-using ChatClient.ViewModels.Design;
+﻿using System;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
+using Avalonia.Threading;
+using ChatAPI.Models;
+using ChatClient.Utility;
+using ChatClient.ViewModels.Abstract;
 
 namespace ChatClient.Services;
 
@@ -20,10 +16,11 @@ internal class UIService : IUIServiceInternal
         _serviceProvider = serviceProvider;
     }
 
-    public event EventHandler<string> MessageReceived;
     public event EventHandler LoginSuccessfully;
     public event EventHandler<LoginEventArgs> LoginUnsuccessfully;
-    public event EventHandler<IUser> UserInitialized;
+    public event EventHandler<User> UserInitialized;
+    public event EventHandler<Chat> SelectedChatChanged;
+    public event EventHandler<Message> MessageReceived;
 
     public T GetViewModel<T>() where T : ViewModelBase
     {
@@ -33,7 +30,7 @@ internal class UIService : IUIServiceInternal
         return vm;
     }
 
-    public void OnMessageReceived(string message)
+    public void OnMessageReceived(Message message)
     {
         Dispatcher.UIThread.Invoke(() =>
         {
@@ -57,13 +54,20 @@ internal class UIService : IUIServiceInternal
         });
     }
 
-    public void OnUserInitialized(IUser user) 
+    public void OnUserInitialized(User user) 
     {
         Dispatcher.UIThread.Invoke(() =>
         {
-            UserInitialized?.Invoke(this, IUser);
+            UserInitialized?.Invoke(this, user);
         });
     }
 
+    public void OnSelectedChatChanged(Chat chat)
+    {
+        Dispatcher.UIThread.Invoke(() =>
+        {
+            SelectedChatChanged?.Invoke(this, chat);
+        });
+    }
 }
 

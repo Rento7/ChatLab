@@ -8,16 +8,20 @@ namespace ChatClient.Services;
 internal interface IUIService
 {
     T GetViewModel<T>() where T : ViewModelBase;
+
+    event EventHandler<Chat> SelectedChatChanged;
+    void OnSelectedChatChanged(Chat chat);
 }
 
 internal interface IUIServiceInternal : IUIService
 {
-    event EventHandler<string> MessageReceived;
-    event EventHandler<LoginEventArgs> LoginUnsuccessfully;
     event EventHandler LoginSuccessfully;
-    event EventHandler<IUser> UserInitialized;
-    void OnMessageReceived(string message);
+    event EventHandler<LoginEventArgs> LoginUnsuccessfully;
+    event EventHandler<User> UserInitialized;
+    event EventHandler<Message> MessageReceived;
+
     void OnLoginSuccessfully();
     void OnLoginUnsuccessfully(LoginEventArgs args);
-    void OnUserInitialized(IUser user);
+    void OnUserInitialized(User user);
+    void OnMessageReceived(Message message);
 }

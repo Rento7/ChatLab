@@ -4,5 +4,5 @@ namespace ChatAPI;
 
 public interface IClientApi
 {
-    void InitUser(IUser user);
+    void InitUser(User user);
 }

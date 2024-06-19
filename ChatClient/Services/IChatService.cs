@@ -1,17 +1,16 @@
-﻿using ChatClient.Models;
-using ChatClient.Utility;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using ChatAPI.Models;
+using ChatClient.Utility;
 
 namespace ChatClient.Services;
 
-//TODO change;
 
 public interface IChatService
 {
     Task ConnectToServer();
 
-    Task SendMessage(string message);
+    Task SendMessage(Message message);
 
     Task Login(string login, string password);
 
@@ -19,6 +18,8 @@ public interface IChatService
 
     event EventHandler<LoginEventArgs> LoginUnsuccessfully;
 
-    event EventHandler<string> MessageReceived;
+    event EventHandler<User> UserInitialized;
+
+    event EventHandler<Message> MessageReceived;
 }
 

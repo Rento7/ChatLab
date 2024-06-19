@@ -9,6 +9,7 @@ namespace ChatClient.ViewModels.Abstract
 {
     internal interface IChatsListViewModel
     {
-        ObservableCollection<IChatViewModel> Chats { get; set; }
+        ObservableCollection<IChatListItemViewModel> Chats { get; set; }
+        IChatListItemViewModel SelectedChat { get; set; }
     }
 }

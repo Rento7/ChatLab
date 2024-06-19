@@ -1,8 +1,6 @@
-﻿using ChatAPI.Models;
+﻿namespace ChatAPI.Models;
 
-namespace ChatServer.Models;
-
-public class MessageDto : IMessage
+public class Message
 {
     public Guid Id { get; set; }
     public string Text { get; set; }

@@ -2,10 +2,9 @@
 using System.Collections.ObjectModel;
 using System.Reactive;
 using ReactiveUI;
-using ChatClient.Models;
 using ChatClient.Services;
 using ChatClient.ViewModels.Abstract;
-using System.Windows.Input;
+using ChatAPI.Models;
 
 namespace ChatClient.ViewModels;
 
@@ -14,9 +13,12 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
     IChatService _chatService;
     IUIService _uiService;
 
-    ObservableCollection<Message> _messages;
+    User _user;
+    Chat _chat;
+
     string _name = string.Empty;
     string _messageText = string.Empty;
+    ObservableCollection<IMessageItemViewModel> _messages;
     ReactiveCommand<Unit, Unit> _sendMessageCommand;
 
     public ChatViewModel(IChatService chatService, IUIService uiService)
@@ -24,8 +26,9 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
         _chatService = chatService;
         _uiService = uiService;
 
-        _messages = new ObservableCollection<Message>();
+        _messages = new ObservableCollection<IMessageItemViewModel>();
 
+        //TODO add chat null check
         IObservable<bool> isInputValid = this.WhenAnyValue(
             x => x.MessageText,
             msg => !string.IsNullOrWhiteSpace(msg)
@@ -33,20 +36,43 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
 
         _sendMessageCommand = ReactiveCommand.Create(() =>
         {
-            //_messages.Add(new Message() { Text = MessageText });
-            _chatService.SendMessage(MessageText);
+            var message = new Message()
+            {
+                ChatId = _chat.Id,
+                SenderId = _user.Id,
+                Text = MessageText
+            };
+
+            _chatService.SendMessage(message);
             MessageText = string.Empty;
+
         }, isInputValid);
 
         _chatService.MessageReceived += _chatService_MessageReceived;
+        _uiService.SelectedChatChanged += _uiService_SelectedChatChanged;
+        _chatService.UserInitialized += _chatService_UserInitialized;
     }
 
-    private void _chatService_MessageReceived(object? sender, string message)
+    private void _chatService_UserInitialized(object? sender, User user)
     {
-        _messages.Add(new Message() { Text = message });
+        _user = user;
     }
 
-    public ObservableCollection<Message> Messages
+    private void _uiService_SelectedChatChanged(object? sender, Chat chat)
+    {
+        _chat = chat;
+
+        _messages.Clear();
+        foreach (var message in chat.Messages)
+            _messages.Add(new MessageItemViewModel(message));
+    }
+
+    private void _chatService_MessageReceived(object? sender, Message message)
+    {
+        //_messages.Add(new Message() { Text = message });
+    }
+
+    public ObservableCollection<IMessageItemViewModel> Messages
     {
         get => _messages;
         set => this.RaiseAndSetIfChanged(ref _messages, value);
@@ -64,7 +90,7 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
         set => this.RaiseAndSetIfChanged(ref _messageText, value);
     }
 
-    public ICommand SendMessageCommand => _sendMessageCommand;
+    public IReactiveCommand SendMessageCommand => _sendMessageCommand;
 
     public void Dispose()
     {

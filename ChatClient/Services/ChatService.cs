@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.SignalR.Client;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ChatAPI;
-using ChatClient.Models;
 using ChatClient.Utility;
 using ChatAPI.Models;
 
@@ -17,7 +16,7 @@ internal partial class ChatService : IChatService, IDisposable
     IUIServiceInternal _uiService;
     HubConnection _connection = null!;
     string access_token;
-    IUser _user;
+    User _user;
 
     public ChatService(IUIService uiService) 
     {
@@ -31,7 +30,7 @@ internal partial class ChatService : IChatService, IDisposable
             })
             .Build();
 
-        _connection.On<User>(nameof(IClientApi.InitUser), InitUser);
+        _connection.On<User>("InitUser", InitUser);
     }
 
     public async Task ConnectToServer()
@@ -91,8 +90,7 @@ internal partial class ChatService : IChatService, IDisposable
             ConnectToServer();
 
             await _connection.InvokeAsync(nameof(IServerApi.RequestUser));
-
-            _uiService.OnUserInitialized(_user);
+            _uiService.OnLoginSuccessfully();
         }
         else 
         {

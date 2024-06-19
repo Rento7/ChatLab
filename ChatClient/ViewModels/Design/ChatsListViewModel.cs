@@ -1,20 +1,25 @@
-﻿using ChatClient.ViewModels.Abstract;
-using ReactiveUI;
+﻿using ReactiveUI;
 using System.Collections.ObjectModel;
+using ChatClient.ViewModels.Abstract;
 
 namespace ChatClient.ViewModels.Design;
 internal class ChatsListViewModel : ViewModelBase, IChatsListViewModel
 {
-    ObservableCollection<IChatViewModel> _fakeChats = new()
+    ObservableCollection<IChatListItemViewModel> _fakeChats = new()
     {
-        new ChatViewModel() { Name = "User chat 11111"},
-        new ChatViewModel() { Name = "User chat 22222"},
-        new ChatViewModel() { Name = "User chat 33333"},
+        new ChatListItemViewModel () { Name = "User chat 11111"},
+        new ChatListItemViewModel () { Name = "User chat 22222"},
+        new ChatListItemViewModel () { Name = "User chat 33333"},
     };
 
-    public ObservableCollection<IChatViewModel> Chats 
+    public ObservableCollection<IChatListItemViewModel> Chats 
     { 
         get => _fakeChats;
         set => this.RaiseAndSetIfChanged(ref _fakeChats, value); 
-    } 
+    }
+    public IChatListItemViewModel SelectedChat 
+    { 
+        get => _fakeChats[0]; 
+        set => throw new System.NotImplementedException(); 
+    }
 }

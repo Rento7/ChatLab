@@ -1,9 +1,8 @@
-﻿using ChatClient.Services;
-using ChatClient.ViewModels.Abstract;
-using ReactiveUI;
-using System;
+﻿using System;
 using System.Reactive;
-using System.Windows.Input;
+using ReactiveUI;
+using ChatClient.Services;
+using ChatClient.ViewModels.Abstract;
 
 namespace ChatClient.ViewModels;
 
@@ -70,7 +69,7 @@ internal class LoginPageViewModel : ViewModelBase, IDisposable
         set => this.RaiseAndSetIfChanged(ref _passWord, value);
     }
 
-    public ICommand LoginCommand => _loginCommand;
+    public IReactiveCommand LoginCommand => _loginCommand;
 
     public void Dispose()
     {

@@ -1,9 +1,7 @@
-﻿using ChatClient.Commands;
-using ChatClient.Models;
-using ChatClient.ViewModels.Abstract;
+﻿using System.Collections.ObjectModel;
 using ReactiveUI;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
+using ChatClient.Commands;
+using ChatClient.ViewModels.Abstract;
 
 namespace ChatClient.ViewModels.Design;
 
@@ -11,12 +9,12 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel
 {
     string _name = "design chat name";
 
-    ObservableCollection<Message> _fakeMessages = new ObservableCollection<Message>() 
+    ObservableCollection<IMessageItemViewModel> _fakeMessages = new ObservableCollection<IMessageItemViewModel>() 
     {
-        new Message() { Text = "Message 11111111" },
-        new Message() { Text = "Message 22222222 abc" },
-        new Message() { Text = "Message 33333333 qwert" },
-        new Message() { Text = "Message 44444444 o0o" },
+        new MessageItemViewModel() { Text = "Message 11111111" },
+        new MessageItemViewModel() { Text = "Message 22222222 abc" },
+        new MessageItemViewModel() { Text = "Message 33333333 qwert" },
+        new MessageItemViewModel() { Text = "Message 44444444 o0o" },
     };
 
     public string Name 
@@ -25,14 +23,13 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel
         set => this.RaiseAndSetIfChanged(ref _name, value);
     }
 
-    public ObservableCollection<Message> Messages 
+    public ObservableCollection<IMessageItemViewModel> Messages 
     { 
         get => _fakeMessages;
         set => this.RaiseAndSetIfChanged(ref _fakeMessages, value);
     }
 
-    public ICommand SendMessageCommand => new EmptyCommand();
+    public IReactiveCommand SendMessageCommand => null!;
 
- 
 }
 

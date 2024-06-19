@@ -11,7 +11,7 @@
 		<design:ChatsListViewModel />
 	</Design.DataContext>
 	<Grid>
-		<ListBox ItemsSource="{Binding Chats}">
+		<ListBox ItemsSource="{Binding Chats}" SelectedItem="{Binding SelectedChat}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<StackPanel Orientation="Horizontal">

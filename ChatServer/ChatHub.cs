@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.SignalR;
 using ChatDb;
 using ChatAPI;
-using ChatServer.Models;
 using ChatServer.Extensions;
+using ChatAPI.Models;
 
 namespace ChatServer
 {
@@ -16,9 +16,10 @@ namespace ChatServer
             _repository = chatRepository;
         }
 
-        public async Task Send(string message)
+        public async Task SendMessage(Message message)
         {
-            await Clients.All.SendAsync("Receive", message);
+            //TODO change
+            //await Clients.All.SendAsync("Receive", message);
         }
 
         public async Task RequestUser() 

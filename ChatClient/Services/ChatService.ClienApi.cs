@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using ChatAPI;
 using ChatAPI.Models;
-using ChatClient.Models;
 using ChatClient.Utility;
 using Microsoft.AspNetCore.SignalR.Client;
 
@@ -10,7 +9,7 @@ namespace ChatClient.Services
 {
     internal partial class ChatService : IClientApi
     {
-        public event EventHandler<string> MessageReceived
+        public event EventHandler<Message> MessageReceived
         {
             add => _uiService.MessageReceived += value;
             remove => _uiService.MessageReceived -= value;
@@ -28,22 +27,33 @@ namespace ChatClient.Services
             remove => _uiService.LoginUnsuccessfully -= value;
         }
 
-        public void InitUser(IUser user)
+        public event EventHandler<User> UserInitialized
         {
-            _user = user;
+            add => _uiService.UserInitialized += value;
+            remove => _uiService.UserInitialized -= value;
         }
 
-        public async Task SendMessage(string message)
+        public void InitUser(User user)
+        {
+            _user = user;
+            _uiService.OnUserInitialized(_user);
+        }
+ 
+        public void Test(string test)
+        {
+            var helloSignalR = test;
+        }
+
+        public async Task SendMessage(Message message)
         {
             try
             {
-                await _connection.InvokeAsync("Send", message);
+                await _connection.InvokeAsync(nameof(IServerApi.SendMessage), message);
             }
             catch (Exception ex)
             {
                 //TODO
             }
         }
-
     }
 }
