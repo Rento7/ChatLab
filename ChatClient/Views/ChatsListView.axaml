@@ -3,13 +3,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:ChatClient.ViewModels"
-			 xmlns:design="clr-namespace:ChatClient.ViewModels.Design"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ChatClient.Views.ChatsListView"
 			 x:DataType="vm:ChatsListViewModel">
-	<Design.DataContext>
-		<design:ChatsListViewModel />
-	</Design.DataContext>
 	<Grid>
 		<ListBox ItemsSource="{Binding Chats}" SelectedItem="{Binding SelectedChat}">
 			<ListBox.ItemTemplate>

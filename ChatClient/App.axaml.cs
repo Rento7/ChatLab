@@ -29,6 +29,7 @@ public partial class App : Application, IDisposable
         collection.AddTransient<RegistrationPageViewModel>();
 
         collection.AddTransient<MainViewModel>();
+        collection.AddTransient<ChatPageViewModel>();
         collection.AddTransient<ChatViewModel>();
         collection.AddTransient<ChatsListViewModel>();
 

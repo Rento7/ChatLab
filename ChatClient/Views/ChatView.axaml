@@ -4,14 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:ChatClient.ViewModels"
 			 xmlns:abc="clr-namespace:ChatClient.ViewModels.Abstract"
-			 xmlns:design="clr-namespace:ChatClient.ViewModels.Design"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ChatClient.Views.ChatView"
 			 x:DataType="vm:ChatViewModel">
-	<Design.DataContext>
-		<design:ChatViewModel />
-	</Design.DataContext>
-
 	<DockPanel>
 		<DockPanel DockPanel.Dock="Bottom" MaxHeight="240">
 			<Button DockPanel.Dock="Right" VerticalAlignment="Bottom" Command="{Binding SendMessageCommand}">Send</Button>

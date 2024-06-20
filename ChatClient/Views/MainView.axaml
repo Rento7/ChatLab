@@ -3,22 +3,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:ChatClient.ViewModels"
-			 xmlns:design="clr-namespace:ChatClient.ViewModels.Design"
 			 xmlns:views="clr-namespace:ChatClient.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ChatClient.Views.MainView"
              x:DataType="vm:MainViewModel">
-    <Design.DataContext>
-	    <design:MainViewModel />
-    </Design.DataContext>
-	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*" MinWidth="54" MaxWidth="400"/>
-			<ColumnDefinition Width="4"/>
-			<ColumnDefinition Width="4*"/>
-		</Grid.ColumnDefinitions>
-		<views:ChatsListView Grid.Column="0" DataContext="{Binding ChatsListViewModel}"/>
-		<GridSplitter Grid.Column="1" ResizeDirection="Columns"/>
-		<views:ChatView Grid.Column="2" DataContext="{Binding SelectedChatViewModel}"/>
-	</Grid>
+	<TabControl Margin="5">
+		<TabItem Header="Chats">
+			<views:ChatPageView DataContext="{Binding ChatPageViewModel}"/>
+		</TabItem>
+		
+		<TabItem Header="Contacts">
+		</TabItem>
+		
+		<TabItem Header="Settings">
+		</TabItem>
+	</TabControl>
 </UserControl>

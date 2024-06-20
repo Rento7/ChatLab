@@ -2,6 +2,6 @@
 
 public interface IMainViewModel
 {
-    IChatsListViewModel ChatsListViewModel { get; }
-    IChatViewModel SelectedChatViewModel { get; set; }
+    IChatPageViewModel ChatPageViewModel { get; }
+
 }

@@ -68,8 +68,9 @@ public class ChatContext : DbContext
 
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
             entity.Property(e => e.Text).HasMaxLength(450);
+            entity.Property(e => e.SendTime).IsRequired(false);
+            entity.Property(e => e.IsEdited).IsRequired(false);
 
             entity.HasOne(e => e.Chat)
                 .WithMany(e => e.Messages)
