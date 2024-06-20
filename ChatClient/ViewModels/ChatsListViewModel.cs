@@ -56,11 +56,14 @@ internal class ChatsListViewModel : ViewModelBase, IChatsListViewModel, IDisposa
         get => _selectedChat;
         set 
         {
+            if (value == null)
+                return;
+
             if (_selectedChat == value)
                 return;
 
             _selectedChat = value;
-            _uiService.OnSelectedChatChanged(_selectedChat.Chat);
+            _chatService.SelectChat(_selectedChat.Chat.Id);
             this.RaisePropertyChanged();
         }
     }

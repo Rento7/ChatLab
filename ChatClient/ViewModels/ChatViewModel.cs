@@ -59,9 +59,10 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
 
         _chatService.UserInitialized += _chatService_UserInitialized;
         _chatService.MessageReceived += _chatService_MessageReceived;
-        _chatService.ChatRenamed += _chatService_ChatRenamed; 
-        _uiService.SelectedChatChanged += _uiService_SelectedChatChanged;
+        _chatService.ChatRenamed += _chatService_ChatRenamed;
+        _chatService.ChatHasReselected += _chatService_ChatHasReselected;
     }
+    
 
     private void _chatService_ChatRenamed(object? sender, Chat chat)
     {
@@ -77,7 +78,7 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
         _user = user;
     }
 
-    private void _uiService_SelectedChatChanged(object? sender, Chat chat)
+    private void _chatService_ChatHasReselected(object? sender, Chat chat)
     {
         _chat = chat;
 
@@ -100,6 +101,9 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
 
     private void _chatService_MessageReceived(object? sender, Message message)
     {
+        if (_chat == null || message.ChatId != _chat.Id)
+            return;
+
         _messages.Add(new MessageItemViewModel(message, _user.Id == message.SenderId));
     }
 

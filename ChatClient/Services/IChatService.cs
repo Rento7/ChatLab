@@ -14,6 +14,7 @@ public interface IChatService
 
     Task SendMessage(Message message);
     Task RenameChat(Guid chatId, string newName);
+    Task SelectChat(Guid chatId);
     Task Login(string login, string password);
 
     event EventHandler LoginSuccessfully;
@@ -24,5 +25,6 @@ public interface IChatService
 
     event EventHandler<Message> MessageReceived;
     event EventHandler<Chat> ChatRenamed;
+    event EventHandler<Chat> ChatHasReselected;
 }
 

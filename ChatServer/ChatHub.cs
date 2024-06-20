@@ -46,5 +46,14 @@ namespace ChatServer
             var users = chat.Users.Select(user => user.Id.ToString());
             await Clients.Users(users).SendAsync(nameof(IClientApi.ChatHasRenamed), chat.ToDto());
         }
+
+        public async Task SelectChat(Guid chatId)
+        {
+            if (Context.UserIdentifier is string id)
+            {
+                var chat = await _repository.GetChatByIdAsync(chatId);
+                await Clients.User(id).SendAsync(nameof(IClientApi.ChatHasSelected), chat.ToDto());
+            }
+        }
     }
 }

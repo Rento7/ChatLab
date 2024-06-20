@@ -39,6 +39,13 @@ namespace ChatClient.Services
             remove => _uiService.ChatRenamed -= value;
         }
 
+        public event EventHandler<Chat> ChatHasReselected
+        {
+            add => _uiService.SelectedChatChanged += value;
+            remove => _uiService.SelectedChatChanged -= value;
+        }
+
+
         public void InitUser(User user)
         {
             _user = user;
@@ -55,6 +62,11 @@ namespace ChatClient.Services
             _uiService.OnChatRenamed(chat);
         }
 
+        public void ChatHasSelected(Chat chat)
+        {
+            _uiService.OnSelectedChatChanged(chat);
+        }
+
         public async Task SendMessage(Message message)
         {
             await _connection.InvokeAsync(nameof(IServerApi.SendMessage), message);
@@ -63,6 +75,11 @@ namespace ChatClient.Services
         public async Task RenameChat(Guid chatId, string newName) 
         {
             await _connection.InvokeAsync(nameof(IServerApi.RenameChat), chatId, newName);
+        }
+
+        public async Task SelectChat(Guid chatId)
+        {
+            await _connection.InvokeAsync(nameof(IServerApi.SelectChat), chatId);
         }
     }
 }

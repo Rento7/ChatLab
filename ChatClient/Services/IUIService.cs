@@ -9,8 +9,6 @@ internal interface IUIService
 {
     T GetViewModel<T>() where T : ViewModelBase;
 
-    event EventHandler<Chat> SelectedChatChanged;
-    void OnSelectedChatChanged(Chat chat);
 }
 
 internal interface IUIServiceInternal : IUIService
@@ -20,9 +18,12 @@ internal interface IUIServiceInternal : IUIService
     event EventHandler<User> UserInitialized;
     event EventHandler<Message> MessageReceived;
     event EventHandler<Chat> ChatRenamed;
+    event EventHandler<Chat> SelectedChatChanged;
+
     void OnLoginSuccessfully();
     void OnLoginUnsuccessfully(LoginEventArgs args);
     void OnUserInitialized(User user);
     void OnMessageReceived(Message message);
     void OnChatRenamed(Chat chat);
+    void OnSelectedChatChanged(Chat chat);
 }

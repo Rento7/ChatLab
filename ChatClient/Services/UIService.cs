@@ -19,9 +19,9 @@ internal class UIService : IUIServiceInternal
     public event EventHandler LoginSuccessfully;
     public event EventHandler<LoginEventArgs> LoginUnsuccessfully;
     public event EventHandler<User> UserInitialized;
-    public event EventHandler<Chat> SelectedChatChanged;
     public event EventHandler<Message> MessageReceived;
     public event EventHandler<Chat> ChatRenamed;
+    public event EventHandler<Chat> SelectedChatChanged;
 
     public T GetViewModel<T>() where T : ViewModelBase
     {
@@ -76,6 +76,14 @@ internal class UIService : IUIServiceInternal
         Dispatcher.UIThread.Invoke(() =>
         {
             ChatRenamed?.Invoke(this, chat);
+        });
+    }
+
+    public void OnUpdateChatHistory(Chat chat) 
+    {
+        Dispatcher.UIThread.Invoke(() =>
+        {
+            SelectedChatChanged?.Invoke(this, chat);
         });
     }
 
