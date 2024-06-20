@@ -33,6 +33,12 @@ namespace ChatClient.Services
             remove => _uiService.UserInitialized -= value;
         }
 
+        public event EventHandler<Chat> ChatRenamed
+        {
+            add => _uiService.ChatRenamed += value;
+            remove => _uiService.ChatRenamed -= value;
+        }
+
         public void InitUser(User user)
         {
             _user = user;
@@ -44,14 +50,19 @@ namespace ChatClient.Services
             _uiService.OnMessageReceived(message);
         }
 
-        public void Test(string test)
+        public void ChatHasRenamed(Chat chat)
         {
-            var helloSignalR = test;
+            _uiService.OnChatRenamed(chat);
         }
 
         public async Task SendMessage(Message message)
         {
             await _connection.InvokeAsync(nameof(IServerApi.SendMessage), message);
+        }
+
+        public async Task RenameChat(Guid chatId, string newName) 
+        {
+            await _connection.InvokeAsync(nameof(IServerApi.RenameChat), chatId, newName);
         }
     }
 }

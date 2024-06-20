@@ -6,5 +6,6 @@ namespace ChatAPI
     {
         Task RequestUser();
         Task SendMessage(Message message);
+        Task RenameChat(Guid chatId, string newName);
     }
 }

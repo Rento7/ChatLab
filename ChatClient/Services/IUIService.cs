@@ -19,9 +19,10 @@ internal interface IUIServiceInternal : IUIService
     event EventHandler<LoginEventArgs> LoginUnsuccessfully;
     event EventHandler<User> UserInitialized;
     event EventHandler<Message> MessageReceived;
-
+    event EventHandler<Chat> ChatRenamed;
     void OnLoginSuccessfully();
     void OnLoginUnsuccessfully(LoginEventArgs args);
     void OnUserInitialized(User user);
     void OnMessageReceived(Message message);
+    void OnChatRenamed(Chat chat);
 }

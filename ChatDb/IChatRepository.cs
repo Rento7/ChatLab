@@ -15,4 +15,5 @@ public interface IChatRepository
     Task CreateUserAsync(User user);
     Task CreateChatAsync(Chat chat);
     Task CreateMessageAsync(Message message);
+    Task UpdateChatName(Guid chatId, string newName);
 }

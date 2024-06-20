@@ -5,7 +5,6 @@ using ReactiveUI;
 using ChatClient.Services;
 using ChatClient.ViewModels.Abstract;
 using ChatAPI.Models;
-using System.Reactive.Linq;
 
 namespace ChatClient.ViewModels;
 
@@ -21,6 +20,7 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
     string _messageText = string.Empty;
     ObservableCollection<IMessageItemViewModel> _messages;
     ReactiveCommand<Unit, Unit> _sendMessageCommand;
+    ReactiveCommand<Unit, Unit> _renameChatCommand;
 
     public ChatViewModel(IChatService chatService, IUIService uiService)
     {
@@ -29,7 +29,7 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
 
         _messages = new ObservableCollection<IMessageItemViewModel>();
 
-        IObservable<bool> isInputValid = this.WhenAnyValue(
+        IObservable<bool> isMessageInputValid = this.WhenAnyValue(
             vm => vm.MessageText,
             msg => !string.IsNullOrWhiteSpace(msg) && _chat != null
             );
@@ -46,11 +46,30 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
             _chatService.SendMessage(message);
             MessageText = string.Empty;
 
-        }, isInputValid);
+        }, isMessageInputValid);
+
+
+        _renameChatCommand = ReactiveCommand.Create(() =>
+        {
+            if (_chat == null)
+                return;
+
+            _chatService.RenameChat(_chat.Id, _name);
+        });
 
         _chatService.UserInitialized += _chatService_UserInitialized;
         _chatService.MessageReceived += _chatService_MessageReceived;
+        _chatService.ChatRenamed += _chatService_ChatRenamed; 
         _uiService.SelectedChatChanged += _uiService_SelectedChatChanged;
+    }
+
+    private void _chatService_ChatRenamed(object? sender, Chat chat)
+    {
+        if (_chat.Id == chat.Id) 
+        {
+            _chat = chat;
+            this.RaisePropertyChanged(nameof(Name));
+        }
     }
 
     private void _chatService_UserInitialized(object? sender, User user)
@@ -68,10 +87,15 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
         if (_user == null)
             return;
 
+        _name = chat.Name;
+        this.RaisePropertyChanged(nameof(Name));
+
         _messages.Clear();
 
         foreach (var message in chat.Messages)
             _messages.Add(new MessageItemViewModel(message, _user.Id == message.SenderId));
+
+        
     }
 
     private void _chatService_MessageReceived(object? sender, Message message)
@@ -98,6 +122,7 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
     }
 
     public IReactiveCommand SendMessageCommand => _sendMessageCommand;
+    public IReactiveCommand RenameChatCommand => _renameChatCommand;
 
     public void Dispose()
     {

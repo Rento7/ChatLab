@@ -8,5 +8,6 @@ namespace ChatClient.ViewModels.Abstract
         string Name { get; set; }
         ObservableCollection<IMessageItemViewModel> Messages { get; set; }
         IReactiveCommand SendMessageCommand { get; }
+        IReactiveCommand RenameChatCommand { get; }
     }
 }

@@ -4,6 +4,7 @@ using ReactiveUI;
 using ChatClient.Services;
 using ChatClient.ViewModels.Abstract;
 using ChatAPI.Models;
+using System.Linq;
 
 namespace ChatClient.ViewModels;
 internal class ChatsListViewModel : ViewModelBase, IChatsListViewModel, IDisposable
@@ -21,6 +22,15 @@ internal class ChatsListViewModel : ViewModelBase, IChatsListViewModel, IDisposa
         _uiService = uiService;
         _chatService = chatService;
         _chatService.UserInitialized += _chatService_UserInitialized;
+        _chatService.ChatRenamed += _chatService_ChatRenamed;
+    }
+
+    private void _chatService_ChatRenamed(object? sender, Chat chat)
+    {
+        var chatItemVm = _chats.FirstOrDefault(c => c.Chat.Id == chat.Id);
+        
+        if(chatItemVm != null)
+            chatItemVm.Name = chat.Name;
     }
 
     private void _chatService_UserInitialized(object? sender, User user)

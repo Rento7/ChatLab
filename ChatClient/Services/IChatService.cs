@@ -13,7 +13,7 @@ public interface IChatService
     Task ConnectToServer();
 
     Task SendMessage(Message message);
-
+    Task RenameChat(Guid chatId, string newName);
     Task Login(string login, string password);
 
     event EventHandler LoginSuccessfully;
@@ -23,5 +23,6 @@ public interface IChatService
     event EventHandler<User> UserInitialized;
 
     event EventHandler<Message> MessageReceived;
+    event EventHandler<Chat> ChatRenamed;
 }
 

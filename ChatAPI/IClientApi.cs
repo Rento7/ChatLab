@@ -6,4 +6,5 @@ public interface IClientApi
 {
     void ReceiveMessage(Message message);
     void InitUser(User user);
+    void ChatHasRenamed(Chat chat);
 }

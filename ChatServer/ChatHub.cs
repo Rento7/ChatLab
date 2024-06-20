@@ -27,8 +27,6 @@ namespace ChatServer
             var chat = await _repository.GetChatByIdAsync(message.ChatId);
             var users = chat.Users.Select(user => user.Id.ToString());
 
-            //var createdMessage = await _repository.GetMessageByIdAsync(message.Id);
-
             await Clients.Users(users).SendAsync(nameof(IClientApi.ReceiveMessage), message.ToDto());
         }
 
@@ -39,6 +37,14 @@ namespace ChatServer
                 var user = await _repository.GetUserAsync(Guid.Parse(id));
                 await Clients.User(id).SendAsync(nameof(IClientApi.InitUser), user.ToDto());
             }
+        }
+
+        public async Task RenameChat(Guid chatId, string newName)
+        {
+            await _repository.UpdateChatName(chatId, newName);
+            var chat = await _repository.GetChatByIdAsync(chatId);
+            var users = chat.Users.Select(user => user.Id.ToString());
+            await Clients.Users(users).SendAsync(nameof(IClientApi.ChatHasRenamed), chat.ToDto());
         }
     }
 }

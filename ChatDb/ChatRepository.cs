@@ -107,6 +107,16 @@ public class ChatRepository : IChatRepository, IDisposable
         await _context.SaveChangesAsync();
     }
 
+    public async Task UpdateChatName(Guid chatId, string newName) 
+    {
+        var chat = await GetChatByIdAsync(chatId);
+        if (chat == null)
+            return;
+
+        chat.Name = newName;
+        await _context.SaveChangesAsync();
+    }
+
     protected virtual void Dispose(bool disposing)
     {
         if (!_disposed)

@@ -17,6 +17,18 @@
 			</TextBox>
 		</DockPanel>
 		
+		<DockPanel DockPanel.Dock="Top">
+			
+			<Button DockPanel.Dock="Right" VerticalAlignment="Bottom" Command="{Binding RenameChatCommand}">
+				 Edit
+			</Button>
+			<TextBox Text="{Binding Name}">
+				<TextBox.KeyBindings>
+					<KeyBinding Command="{Binding RenameChatCommand}" Gesture="enter"/>
+				</TextBox.KeyBindings>
+			</TextBox>
+		</DockPanel>
+		
 		<Grid>
 			<ListBox ItemsSource="{Binding Messages}">
 				<ListBox.ItemTemplate>
