@@ -13,6 +13,8 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
     IChatService _chatService;
     IUIService _uiService;
 
+    IMessageItemViewModel _selectedMessageVm;
+
     User _user;
     Chat _chat;
 
@@ -21,6 +23,9 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
     ObservableCollection<IMessageItemViewModel> _messages;
     ReactiveCommand<Unit, Unit> _sendMessageCommand;
     ReactiveCommand<Unit, Unit> _renameChatCommand;
+    ReactiveCommand<Unit, Unit> _startEditMessageCommand;
+    ReactiveCommand<Unit, Unit> _deleteSelectedMessageCommand;
+    ReactiveCommand<Unit, Unit> _deselectMessageCommand;
 
     public ChatViewModel(IChatService chatService, IUIService uiService)
     {
@@ -55,6 +60,12 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
                 return;
 
             _chatService.RenameChat(_chat.Id, _name);
+        });
+
+
+        _deselectMessageCommand = ReactiveCommand.Create(() =>
+        {
+            SelectedMessageVm = null!;
         });
 
         _chatService.UserInitialized += _chatService_UserInitialized;
@@ -95,8 +106,6 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
 
         foreach (var message in chat.Messages)
             _messages.Add(new MessageItemViewModel(message, _user.Id == message.SenderId));
-
-        
     }
 
     private void _chatService_MessageReceived(object? sender, Message message)
@@ -113,6 +122,16 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
         set => this.RaiseAndSetIfChanged(ref _messages, value);
     }
 
+    public IMessageItemViewModel SelectedMessageVm 
+    {
+        get => _selectedMessageVm;
+        set 
+        {
+            this.RaiseAndSetIfChanged(ref _selectedMessageVm, value);
+            this.RaisePropertyChanged(nameof(IsMessageSelected));
+        }
+    }
+
     public string Name
     {
         get => _name;
@@ -125,8 +144,15 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
         set => this.RaiseAndSetIfChanged(ref _messageText, value);
     }
 
+    public bool IsMessageSelected => _selectedMessageVm != null; 
+
     public IReactiveCommand SendMessageCommand => _sendMessageCommand;
     public IReactiveCommand RenameChatCommand => _renameChatCommand;
+    public IReactiveCommand StartEditMessageCommand => _startEditMessageCommand;
+
+    public IReactiveCommand DeleteSelectedMessageCommand => _deleteSelectedMessageCommand;
+
+    public IReactiveCommand DeselectMessageCommand => _deselectMessageCommand;
 
     public void Dispose()
     {

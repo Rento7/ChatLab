@@ -8,14 +8,6 @@
              x:Class="ChatClient.Views.ChatView"
 			 x:DataType="vm:ChatViewModel">
 	<DockPanel>
-		<DockPanel DockPanel.Dock="Bottom" MaxHeight="240">
-			<Button DockPanel.Dock="Right" VerticalAlignment="Bottom" Command="{Binding SendMessageCommand}">Send</Button>
-			<TextBox Text="{Binding MessageText}" TextWrapping="Wrap" >
-				<TextBox.KeyBindings>
-					<KeyBinding Command="{Binding SendMessageCommand}" Gesture="enter"/>
-				</TextBox.KeyBindings>
-			</TextBox>
-		</DockPanel>
 		
 		<DockPanel DockPanel.Dock="Top">
 			
@@ -28,9 +20,40 @@
 				</TextBox.KeyBindings>
 			</TextBox>
 		</DockPanel>
+
+		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal"
+					Classes.hidePanel="{Binding !IsMessageSelected}"
+					Classes.showPanel="{Binding IsMessageSelected }">
+			
+			<StackPanel.Styles>
+				<Style Selector="StackPanel.hidePanel">
+					<Setter Property="IsVisible" Value="False" />
+				</Style>
+				<Style Selector="StackPanel.showPanel">
+					<Setter Property="IsVisible" Value="True" />
+				</Style>
+			</StackPanel.Styles>
+			
+			<Button VerticalAlignment="Center" Command="{Binding StartEditMessageCommand}" Margin="4">
+				Edit selected
+			</Button>
+			<Button VerticalAlignment="Center" Command="{Binding DeleteSelectedMessageCommand}" Margin="4">
+				Delete selected
+			</Button>
+			
+		</StackPanel>
+		
+		<DockPanel DockPanel.Dock="Bottom" MaxHeight="240">
+			<Button DockPanel.Dock="Right" VerticalAlignment="Bottom" Command="{Binding SendMessageCommand}">Send</Button>
+			<TextBox Text="{Binding MessageText}" TextWrapping="Wrap" >
+				<TextBox.KeyBindings>
+					<KeyBinding Command="{Binding SendMessageCommand}" Gesture="enter"/>
+				</TextBox.KeyBindings>
+			</TextBox>
+		</DockPanel>
 		
 		<Grid>
-			<ListBox ItemsSource="{Binding Messages}">
+			<ListBox ItemsSource="{Binding Messages}" SelectedItem="{Binding SelectedMessageVm}">
 				<ListBox.ItemTemplate>
 					<DataTemplate>
 						<StackPanel Classes.class1="{Binding !IsSentByUser}"
@@ -56,6 +79,11 @@
 						<StackPanel VerticalAlignment="Bottom"/>
 					</ItemsPanelTemplate>
 				</ListBox.ItemsPanel>
+
+				<ListBox.KeyBindings>
+					<KeyBinding Command="{Binding DeselectMessageCommand}" Gesture="escape"/>
+				</ListBox.KeyBindings>
+				
 			</ListBox>
 		</Grid>
 	</DockPanel>
