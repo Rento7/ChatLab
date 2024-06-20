@@ -7,6 +7,24 @@
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ChatClient.Views.ChatView"
 			 x:DataType="vm:ChatViewModel">
+	<UserControl.Styles>
+
+		<Style Selector="StackPanel.sendMessageMode">
+			<Setter Property="IsVisible" Value="False"/>
+		</Style>
+		<Style Selector="StackPanel.editMessageMode">
+			<Setter Property="IsVisible" Value="True"/>
+		</Style>
+		
+		<Style Selector="Button.sendMessageMode">
+			<Setter Property="IsVisible" Value="True"/>
+		</Style>
+		<Style Selector="Button.editMessageMode">
+			<Setter Property="IsVisible" Value="False"/>
+		</Style>
+		
+	</UserControl.Styles>
+	
 	<DockPanel>
 		
 		<DockPanel DockPanel.Dock="Top">
@@ -44,12 +62,32 @@
 		</StackPanel>
 		
 		<DockPanel DockPanel.Dock="Bottom" MaxHeight="240">
-			<Button DockPanel.Dock="Right" VerticalAlignment="Bottom" Command="{Binding SendMessageCommand}">Send</Button>
+			
+			<Button DockPanel.Dock="Right" 
+					VerticalAlignment="Bottom" 
+					Command="{Binding SendMessageCommand}"
+					Margin="4"
+					Classes.sendMessageMode="{Binding !IsEditMode}"
+				    Classes.editMessageMode="{Binding IsEditMode}">
+				Send
+			</Button>
+
+			<StackPanel DockPanel.Dock="Right" 
+						VerticalAlignment="Bottom"
+						Classes.sendMessageMode="{Binding !IsEditMode}"
+						Classes.editMessageMode="{Binding IsEditMode}">
+				<Button>Save</Button>
+				<Button>Cancel</Button>
+			</StackPanel>
+			
+			
 			<TextBox Text="{Binding MessageText}" TextWrapping="Wrap" >
 				<TextBox.KeyBindings>
-					<KeyBinding Command="{Binding SendMessageCommand}" Gesture="enter"/>
+					<KeyBinding Command="{Binding OnTextBoxEnterCommand}" Gesture="enter"/>
+					<KeyBinding Command="{Binding CancelEditingCommand}" Gesture="escape"/>
 				</TextBox.KeyBindings>
 			</TextBox>
+			
 		</DockPanel>
 		
 		<Grid>

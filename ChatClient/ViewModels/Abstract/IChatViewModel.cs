@@ -7,7 +7,7 @@ namespace ChatClient.ViewModels.Abstract
     {
         string Name { get; set; }
         bool IsMessageSelected { get; }
-
+        bool IsEditMode { get; set; }
         IMessageItemViewModel SelectedMessageVm { get; set; }
         ObservableCollection<IMessageItemViewModel> Messages { get; set; }
         IReactiveCommand SendMessageCommand { get; }
@@ -15,5 +15,8 @@ namespace ChatClient.ViewModels.Abstract
         IReactiveCommand StartEditMessageCommand { get; }
         IReactiveCommand DeleteSelectedMessageCommand { get; }
         IReactiveCommand DeselectMessageCommand { get; }
+        IReactiveCommand CancelEditingCommand { get; }
+        IReactiveCommand EditMessageCommand { get; }
+        IReactiveCommand OnTextBoxEnterCommand { get; }
     }
 }

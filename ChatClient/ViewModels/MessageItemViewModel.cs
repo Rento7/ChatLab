@@ -19,6 +19,8 @@ internal class MessageItemViewModel : ViewModelBase, IMessageItemViewModel
 
     public bool IsSentByUser => _isSentByUser;
 
+    public Guid MessageId => _message.Id;
+
     public string Text 
     { 
         get => _message.Text;

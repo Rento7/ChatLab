@@ -72,6 +72,11 @@ namespace ChatClient.Services
             await _connection.InvokeAsync(nameof(IServerApi.SendMessage), message);
         }
 
+        public async Task EditMessage(Guid messageId, string newText)
+        {
+            await _connection.InvokeAsync(nameof(IServerApi.EditMessage), messageId, newText);
+        }
+
         public async Task RenameChat(Guid chatId, string newName) 
         {
             await _connection.InvokeAsync(nameof(IServerApi.RenameChat), chatId, newName);

@@ -1,8 +1,11 @@
 ﻿
+using System;
+
 namespace ChatClient.ViewModels.Abstract;
 
 public interface IMessageItemViewModel
 {
-    public string Text { get; set; }
+    string Text { get; set; }
+    Guid MessageId { get; }
     bool IsSentByUser { get; }
 }

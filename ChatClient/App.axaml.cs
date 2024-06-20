@@ -57,7 +57,7 @@ public partial class App : Application, IDisposable
         ArgumentNullException.ThrowIfNull(_chatService);
 
 #if DEBUG
-        //_chatService.Login("login1", "login1");
+        _chatService.Login("login1", "login1");
 #endif
     }
 

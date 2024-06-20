@@ -9,10 +9,9 @@ namespace ChatClient.Services;
 public interface IChatService
 {
     User CurrentUser { get; }
-
     Task ConnectToServer();
-
     Task SendMessage(Message message);
+    Task EditMessage(Guid messageId, string newText);
     Task RenameChat(Guid chatId, string newName);
     Task SelectChat(Guid chatId);
     Task Login(string login, string password);
