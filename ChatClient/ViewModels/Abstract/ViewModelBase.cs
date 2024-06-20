@@ -2,6 +2,6 @@
 
 namespace ChatClient.ViewModels.Abstract;
 
-internal abstract class ViewModelBase : ReactiveObject
+public abstract class ViewModelBase : ReactiveObject
 {
 }

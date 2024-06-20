@@ -34,6 +34,8 @@ internal partial class ChatService : IChatService, IDisposable
         _connection.On<Message>(nameof(IClientApi.ReceiveMessage), ReceiveMessage);
     }
 
+    public User CurrentUser => _user;
+
     public async Task ConnectToServer()
     {
         try

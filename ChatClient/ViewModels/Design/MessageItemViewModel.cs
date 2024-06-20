@@ -12,5 +12,7 @@ namespace ChatClient.ViewModels.Design
             get => _text; 
             set => this.RaiseAndSetIfChanged(ref _text, value);
         }
+
+        public bool IsSentByUser => false;
     }
 }

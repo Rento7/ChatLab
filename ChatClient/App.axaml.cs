@@ -54,6 +54,10 @@ public partial class App : Application, IDisposable
 
         _chatService = services.GetService<IChatService>()!;
         ArgumentNullException.ThrowIfNull(_chatService);
+
+#if DEBUG
+        _chatService.Login("login1", "login1");
+#endif
     }
 
     public void Dispose()

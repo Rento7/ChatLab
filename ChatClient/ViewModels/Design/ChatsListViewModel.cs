@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using ChatClient.ViewModels.Abstract;
 
 namespace ChatClient.ViewModels.Design;
-internal class ChatsListViewModel : ViewModelBase, IChatsListViewModel
+public class ChatsListViewModel : ViewModelBase, IChatsListViewModel
 {
     ObservableCollection<IChatListItemViewModel> _fakeChats = new()
     {
@@ -21,5 +21,10 @@ internal class ChatsListViewModel : ViewModelBase, IChatsListViewModel
     { 
         get => _fakeChats[0]; 
         set => throw new System.NotImplementedException(); 
+    }
+
+    public ChatsListViewModel() 
+    {
+    
     }
 }

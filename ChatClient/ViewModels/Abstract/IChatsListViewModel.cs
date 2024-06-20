@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+ 
+namespace ChatClient.ViewModels.Abstract;
 
-namespace ChatClient.ViewModels.Abstract
+public interface IChatsListViewModel
 {
-    internal interface IChatsListViewModel
-    {
-        ObservableCollection<IChatListItemViewModel> Chats { get; set; }
-        IChatListItemViewModel SelectedChat { get; set; }
-    }
+    ObservableCollection<IChatListItemViewModel> Chats { get; set; }
+    IChatListItemViewModel SelectedChat { get; set; }
 }

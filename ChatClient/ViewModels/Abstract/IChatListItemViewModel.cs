@@ -2,7 +2,7 @@
 
 namespace ChatClient.ViewModels.Abstract;
 
-internal interface IChatListItemViewModel
+public interface IChatListItemViewModel
 {
     Chat Chat { get; }
     string Name { get; set; }

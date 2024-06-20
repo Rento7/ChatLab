@@ -11,6 +11,7 @@ internal class ChatsListViewModel : ViewModelBase, IChatsListViewModel, IDisposa
     IChatService _chatService;
     IUIService _uiService;
 
+    User _user;
 
     IChatListItemViewModel _selectedChat;
     ObservableCollection<IChatListItemViewModel> _chats = new ObservableCollection<IChatListItemViewModel>();
@@ -24,10 +25,14 @@ internal class ChatsListViewModel : ViewModelBase, IChatsListViewModel, IDisposa
 
     private void _chatService_UserInitialized(object? sender, User user)
     {
+        _user = user;
+        
         _chats.Clear();
 
         foreach (var chat in user.Chats)
             _chats.Add(new ChatListItemViewModel(chat));
+
+        SelectedChat = _chats[0];
     }
 
     public ObservableCollection<IChatListItemViewModel> Chats

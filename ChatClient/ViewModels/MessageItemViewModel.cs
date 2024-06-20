@@ -7,12 +7,17 @@ namespace ChatClient.ViewModels;
 
 internal class MessageItemViewModel : ViewModelBase, IMessageItemViewModel
 {
+    bool _isSentByUser;
     Message _message;
-    public MessageItemViewModel(Message message) 
+
+    public MessageItemViewModel(Message message, bool isSentByUser = false) 
     {
         ArgumentNullException.ThrowIfNull(message);
         _message = message; 
+        _isSentByUser = isSentByUser;
     }
+
+    public bool IsSentByUser => _isSentByUser;
 
     public string Text 
     { 

@@ -13,7 +13,7 @@
     </Design.DataContext>
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*" MinWidth="60" MaxWidth="400"/>
+			<ColumnDefinition Width="*" MinWidth="54" MaxWidth="400"/>
 			<ColumnDefinition Width="4"/>
 			<ColumnDefinition Width="4*"/>
 		</Grid.ColumnDefinitions>

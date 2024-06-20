@@ -26,16 +26,27 @@
 			<ListBox ItemsSource="{Binding Messages}">
 				<ListBox.ItemTemplate>
 					<DataTemplate>
-						<StackPanel Orientation="Horizontal">
-							<TextBlock Text="{Binding Text}"/>
+						<StackPanel Classes.class1="{Binding !IsSentByUser}"
+									Classes.class2="{Binding IsSentByUser }">
+							
+							<StackPanel.Styles>
+								<Style Selector="StackPanel.class1">
+									<Setter Property="HorizontalAlignment" Value="Left" />
+								</Style>
+								<Style Selector="StackPanel.class2">
+									<Setter Property="HorizontalAlignment" Value="Right" />
+								</Style>
+							</StackPanel.Styles>
+							
+							<TextBlock Text="{Binding Text}" HorizontalAlignment="Right"/>
+							
 						</StackPanel>
 					</DataTemplate>
 				</ListBox.ItemTemplate>
 
 				<ListBox.ItemsPanel>
 					<ItemsPanelTemplate>
-						<!-- TODO change, test purpose only -->
-						<StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+						<StackPanel VerticalAlignment="Bottom"/>
 					</ItemsPanelTemplate>
 				</ListBox.ItemsPanel>
 			</ListBox>

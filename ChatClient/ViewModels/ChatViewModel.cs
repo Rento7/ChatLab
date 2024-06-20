@@ -5,6 +5,7 @@ using ReactiveUI;
 using ChatClient.Services;
 using ChatClient.ViewModels.Abstract;
 using ChatAPI.Models;
+using System.Reactive.Linq;
 
 namespace ChatClient.ViewModels;
 
@@ -28,10 +29,9 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
 
         _messages = new ObservableCollection<IMessageItemViewModel>();
 
-        //TODO add chat null check
         IObservable<bool> isInputValid = this.WhenAnyValue(
-            x => x.MessageText,
-            msg => !string.IsNullOrWhiteSpace(msg)
+            vm => vm.MessageText,
+            msg => !string.IsNullOrWhiteSpace(msg) && _chat != null
             );
 
         _sendMessageCommand = ReactiveCommand.Create(() =>
@@ -48,9 +48,9 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
 
         }, isInputValid);
 
+        _chatService.UserInitialized += _chatService_UserInitialized;
         _chatService.MessageReceived += _chatService_MessageReceived;
         _uiService.SelectedChatChanged += _uiService_SelectedChatChanged;
-        _chatService.UserInitialized += _chatService_UserInitialized;
     }
 
     private void _chatService_UserInitialized(object? sender, User user)
@@ -62,14 +62,21 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
     {
         _chat = chat;
 
+        if (_user == null)
+            _user = _chatService.CurrentUser;
+
+        if (_user == null)
+            return;
+
         _messages.Clear();
+
         foreach (var message in chat.Messages)
-            _messages.Add(new MessageItemViewModel(message));
+            _messages.Add(new MessageItemViewModel(message, _user.Id == message.SenderId));
     }
 
     private void _chatService_MessageReceived(object? sender, Message message)
     {
-        _messages.Add(new MessageItemViewModel(message));
+        _messages.Add(new MessageItemViewModel(message, _user.Id == message.SenderId));
     }
 
     public ObservableCollection<IMessageItemViewModel> Messages

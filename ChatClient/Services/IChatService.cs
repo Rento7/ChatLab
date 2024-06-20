@@ -8,6 +8,8 @@ namespace ChatClient.Services;
 
 public interface IChatService
 {
+    User CurrentUser { get; }
+
     Task ConnectToServer();
 
     Task SendMessage(Message message);

@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace ChatClient.ViewModels.Abstract;
 
-namespace ChatClient.ViewModels.Abstract
+public interface IMainViewModel
 {
-    internal interface IMainViewModel
-    {
-        IChatsListViewModel ChatsListViewModel { get; }
-        IChatViewModel SelectedChatViewModel { get; set; }
-    }
+    IChatsListViewModel ChatsListViewModel { get; }
+    IChatViewModel SelectedChatViewModel { get; set; }
 }
