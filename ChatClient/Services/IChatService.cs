@@ -5,7 +5,6 @@ using ChatClient.Utility;
 
 namespace ChatClient.Services;
 
-
 public interface IChatService
 {
     User CurrentUser { get; }
@@ -29,4 +28,3 @@ public interface IChatService
     event EventHandler<Chat> ChatRenamed;
     event EventHandler<Chat> ChatHasReselected;
 }
-

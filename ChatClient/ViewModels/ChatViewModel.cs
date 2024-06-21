@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive;
+using System.Reactive.Linq;
+using System.Collections.ObjectModel;
 using ReactiveUI;
+using ChatAPI.Models;
 using ChatClient.Services;
 using ChatClient.ViewModels.Abstract;
-using ChatAPI.Models;
-using System.Reactive.Linq;
-using System.Linq;
 
 namespace ChatClient.ViewModels;
 

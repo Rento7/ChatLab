@@ -1,6 +1,4 @@
-﻿ 
-
-namespace ChatClient.ViewModels.Abstract;
+﻿ namespace ChatClient.ViewModels.Abstract;
 
 public interface IChatPageViewModel
 {

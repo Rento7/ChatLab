@@ -3,39 +3,38 @@ using ReactiveUI;
 using ChatAPI.Models;
 using ChatClient.ViewModels.Abstract;
 
-namespace ChatClient.ViewModels
+namespace ChatClient.ViewModels;
+
+internal class ChatListItemViewModel : ViewModelBase, IChatListItemViewModel
 {
-    internal class ChatListItemViewModel : ViewModelBase, IChatListItemViewModel
+    Chat _chat;
+
+    public ChatListItemViewModel(Chat chat) 
     {
-        Chat _chat;
+        ArgumentNullException.ThrowIfNull(chat);
+        _chat = chat;
+    }
 
-        public ChatListItemViewModel(Chat chat) 
+    public Chat Chat => _chat;
+
+    public string Name 
+    {
+        get 
         {
-            ArgumentNullException.ThrowIfNull(chat);
-            _chat = chat;
+            if (string.IsNullOrEmpty(_chat.Name))
+                return "Chat";
+
+            return _chat.Name;
         }
-
-        public Chat Chat => _chat;
-
-        public string Name 
+        set
         {
-            get 
-            {
-                if (string.IsNullOrEmpty(_chat.Name))
-                    return "Chat";
+            if (Chat.Name == value)
+                return;
 
-                return _chat.Name;
-            }
-            set
-            {
-                if (Chat.Name == value)
-                    return;
+            //TODO change
+            _chat.Name = value;
 
-                //TODO change
-                _chat.Name = value;
-
-                this.RaisePropertyChanged();
-            }
+            this.RaisePropertyChanged();
         }
     }
 }

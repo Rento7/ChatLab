@@ -1,11 +1,11 @@
-﻿using Avalonia;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
+using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using ChatClient.Services;
 using ChatClient.ViewModels;
 using ChatClient.Views;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace ChatClient;
 

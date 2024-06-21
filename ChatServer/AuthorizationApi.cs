@@ -1,9 +1,9 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
 using ChatDb;
-using ChatServer.Models;
 using ChatDb.Models;
+using ChatServer.Models;
 
 namespace ChatServer
 {

@@ -1,14 +1,13 @@
-﻿using ChatAPI.Models;
+﻿using System;
+using ChatAPI.Models;
 using ChatClient.Utility;
 using ChatClient.ViewModels.Abstract;
-using System;
 
 namespace ChatClient.Services;
 
 internal interface IUIService
 {
     T GetViewModel<T>() where T : ViewModelBase;
-
 }
 
 internal interface IUIServiceInternal : IUIService

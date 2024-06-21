@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.Authorization;
 using ChatDb;
 using ChatAPI;
 using ChatServer.Extensions;
 
 using Dto = ChatAPI.Models;
-
-
 
 namespace ChatServer
 {

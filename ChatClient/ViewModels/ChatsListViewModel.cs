@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.ObjectModel;
 using ReactiveUI;
+using ChatAPI.Models;
 using ChatClient.Services;
 using ChatClient.ViewModels.Abstract;
-using ChatAPI.Models;
-using System.Linq;
 
 namespace ChatClient.ViewModels;
 internal class ChatsListViewModel : ViewModelBase, IChatsListViewModel, IDisposable

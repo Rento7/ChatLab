@@ -1,6 +1,5 @@
 ﻿using ChatClient.Services;
 using ChatClient.ViewModels.Abstract;
-using ReactiveUI;
 
 namespace ChatClient.ViewModels;
 

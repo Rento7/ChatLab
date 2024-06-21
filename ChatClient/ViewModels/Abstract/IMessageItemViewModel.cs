@@ -1,6 +1,5 @@
-﻿
+﻿using System;
 using ChatAPI.Models;
-using System;
 
 namespace ChatClient.ViewModels.Abstract;
 

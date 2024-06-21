@@ -1,13 +1,12 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using Microsoft.Extensions.Caching.Memory;
-using ChatDb;
-using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Text.Json.Serialization;
-using ChatServer.Services;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using ChatDb;
+using ChatServer.Services;
 using ChatServer.Data;
 
 namespace ChatServer;

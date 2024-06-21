@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace ChatAPI;
 
-namespace ChatAPI
+// they should be configurable but for demo/debug purpose let it be
+public static class Urls
 {
-    // they should be configurable but for demo/debug purpose let it be
-    public static class Urls
-    {
-        public const string BaseUrl = "http://localhost:5000/";
-        public const string ChatUrl = BaseUrl + "chat";
-        public const string LoginUrl = BaseUrl + "login";
-    }
+    public const string BaseUrl = "http://localhost:5000/";
+    public const string ChatUrl = BaseUrl + "chat";
+    public const string LoginUrl = BaseUrl + "login";
 }

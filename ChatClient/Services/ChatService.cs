@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.SignalR.Client;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ChatAPI;
-using ChatClient.Utility;
 using ChatAPI.Models;
+using ChatClient.Utility;
 
 namespace ChatClient.Services;
 

@@ -1,14 +1,12 @@
-﻿using System;
- 
-namespace ChatDb.Models
+﻿ 
+namespace ChatDb.Models;
+
+public class Chat
 {
-    public class Chat
-    {
-        public Guid Id { get; set; }
+    public Guid Id { get; set; }
 
-        public string Name { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
-        public ICollection<Message> Messages { get; } = new List<Message>();
-        public List<User> Users { get; } = new List<User>();
-    }
+    public ICollection<Message> Messages { get; } = new List<Message>();
+    public List<User> Users { get; } = new List<User>();
 }

@@ -1,5 +1,5 @@
-﻿using ChatDb.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using ChatDb.Models;
 
 namespace ChatDb;
 public class ChatContext : DbContext
