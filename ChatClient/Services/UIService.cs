@@ -20,9 +20,10 @@ internal class UIService : IUIServiceInternal
     public event EventHandler<LoginEventArgs> LoginUnsuccessfully;
     public event EventHandler<User> UserInitialized;
     public event EventHandler<Message> MessageReceived;
+    public event EventHandler<Message> MessageEdited;
+    public event EventHandler<Guid> MessageDeleted;
     public event EventHandler<Chat> ChatRenamed;
     public event EventHandler<Chat> SelectedChatChanged;
-
     public T GetViewModel<T>() where T : ViewModelBase
     {
         var vm = _serviceProvider.GetService<T>();
@@ -36,6 +37,22 @@ internal class UIService : IUIServiceInternal
         Dispatcher.UIThread.Invoke(() =>
         {
             MessageReceived?.Invoke(this, message);
+        });
+    }
+
+    public void OnMessageEdited(Message message)
+    {
+        Dispatcher.UIThread.Invoke(() =>
+        {
+            MessageEdited?.Invoke(this, message);
+        });
+    }
+
+    public void OnMessageDeleted(Guid messageId)
+    {
+        Dispatcher.UIThread.Invoke(() =>
+        {
+            MessageDeleted?.Invoke(this, messageId);
         });
     }
 
@@ -86,6 +103,8 @@ internal class UIService : IUIServiceInternal
             SelectedChatChanged?.Invoke(this, chat);
         });
     }
+
+
 
 }
 

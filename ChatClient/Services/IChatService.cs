@@ -12,6 +12,7 @@ public interface IChatService
     Task ConnectToServer();
     Task SendMessage(Message message);
     Task EditMessage(Guid messageId, string newText);
+    Task DeleteMessage(Guid messageId);
     Task RenameChat(Guid chatId, string newName);
     Task SelectChat(Guid chatId);
     Task Login(string login, string password);
@@ -23,6 +24,8 @@ public interface IChatService
     event EventHandler<User> UserInitialized;
 
     event EventHandler<Message> MessageReceived;
+    event EventHandler<Message> MessageEdited;
+    event EventHandler<Guid> MessageDeleted;
     event EventHandler<Chat> ChatRenamed;
     event EventHandler<Chat> ChatHasReselected;
 }

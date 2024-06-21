@@ -32,6 +32,8 @@ internal partial class ChatService : IChatService, IDisposable
 
         _connection.On<User>(nameof(IClientApi.InitUser), InitUser);
         _connection.On<Message>(nameof(IClientApi.ReceiveMessage), ReceiveMessage);
+        _connection.On<Message>(nameof(IClientApi.MessageHasEdited), MessageHasEdited);
+        _connection.On<Guid>(nameof(IClientApi.MessageHasDeleted), MessageHasDeleted);
         _connection.On<Chat>(nameof(IClientApi.ChatHasRenamed), ChatHasRenamed);
         _connection.On<Chat>(nameof(IClientApi.ChatHasSelected), ChatHasSelected);
     }

@@ -17,13 +17,17 @@ internal interface IUIServiceInternal : IUIService
     event EventHandler<LoginEventArgs> LoginUnsuccessfully;
     event EventHandler<User> UserInitialized;
     event EventHandler<Message> MessageReceived;
+    event EventHandler<Message> MessageEdited;
+    event EventHandler<Guid> MessageDeleted;
     event EventHandler<Chat> ChatRenamed;
     event EventHandler<Chat> SelectedChatChanged;
-
     void OnLoginSuccessfully();
     void OnLoginUnsuccessfully(LoginEventArgs args);
     void OnUserInitialized(User user);
     void OnMessageReceived(Message message);
+    void OnMessageEdited(Message message);
+    void OnMessageDeleted(Guid messageId);
+
     void OnChatRenamed(Chat chat);
     void OnSelectedChatChanged(Chat chat);
 }

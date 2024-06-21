@@ -30,6 +30,26 @@ namespace ChatServer
             await Clients.Users(users).SendAsync(nameof(IClientApi.ReceiveMessage), message.ToDto());
         }
 
+        public async Task EditMessage(Guid messageId, string newText)
+        {
+            await _repository.UpdateMessage(messageId, newText);
+            var message = await _repository.GetMessageByIdAsync(messageId);
+            var chat = await _repository.GetChatByIdAsync(message.ChatId);
+            var users = chat.Users.Select(user => user.Id.ToString());
+            await Clients.Users(users).SendAsync(nameof(IClientApi.MessageHasEdited), message.ToDto());
+        }
+
+        public async Task DeleteMessage(Guid messageId)
+        {
+            var message = await _repository.GetMessageByIdAsync(messageId);
+            var chat = await _repository.GetChatByIdAsync(message.ChatId);
+            var users = chat.Users.Select(user => user.Id.ToString());
+
+            await _repository.DeleteMessage(messageId);
+
+            await Clients.Users(users).SendAsync(nameof(IClientApi.MessageHasDeleted), messageId);
+        }
+
         public async Task RequestUser() 
         {
             if (Context.UserIdentifier is string id)
@@ -55,5 +75,6 @@ namespace ChatServer
                 await Clients.User(id).SendAsync(nameof(IClientApi.ChatHasSelected), chat.ToDto());
             }
         }
+
     }
 }

@@ -15,6 +15,18 @@ namespace ChatClient.Services
             remove => _uiService.MessageReceived -= value;
         }
 
+        public event EventHandler<Message> MessageEdited
+        {
+            add => _uiService.MessageEdited += value;
+            remove => _uiService.MessageEdited -= value;
+        }
+
+        public event EventHandler<Guid> MessageDeleted
+        {
+            add => _uiService.MessageDeleted += value;
+            remove => _uiService.MessageDeleted -= value;
+        }
+
         public event EventHandler LoginSuccessfully
         {
             add => _uiService.LoginSuccessfully += value;
@@ -45,7 +57,6 @@ namespace ChatClient.Services
             remove => _uiService.SelectedChatChanged -= value;
         }
 
-
         public void InitUser(User user)
         {
             _user = user;
@@ -55,6 +66,16 @@ namespace ChatClient.Services
         public void ReceiveMessage(Message message) 
         {
             _uiService.OnMessageReceived(message);
+        }
+
+        public void MessageHasEdited(Message message)
+        {
+            _uiService.OnMessageEdited(message);
+        }
+
+        public void MessageHasDeleted(Guid messageId)
+        {
+            _uiService.OnMessageDeleted(messageId);
         }
 
         public void ChatHasRenamed(Chat chat)
@@ -76,6 +97,10 @@ namespace ChatClient.Services
         {
             await _connection.InvokeAsync(nameof(IServerApi.EditMessage), messageId, newText);
         }
+        public async Task DeleteMessage(Guid messageId)
+        {
+            await _connection.InvokeAsync(nameof(IServerApi.DeleteMessage), messageId);
+        }
 
         public async Task RenameChat(Guid chatId, string newName) 
         {
@@ -86,5 +111,6 @@ namespace ChatClient.Services
         {
             await _connection.InvokeAsync(nameof(IServerApi.SelectChat), chatId);
         }
+
     }
 }

@@ -17,6 +17,13 @@ internal class MessageItemViewModel : ViewModelBase, IMessageItemViewModel
         _isSentByUser = isSentByUser;
     }
 
+    public void UpdateModel(Message message) 
+    {
+        _message = message;
+        this.RaisePropertyChanged(nameof(IsSentByUser));
+        this.RaisePropertyChanged(nameof(Text));
+    }
+
     public bool IsSentByUser => _isSentByUser;
 
     public Guid MessageId => _message.Id;
@@ -29,7 +36,6 @@ internal class MessageItemViewModel : ViewModelBase, IMessageItemViewModel
             if (_message.Text == value)
                 return;
 
-            //TODO change 
             _message.Text = Text;
             this.RaisePropertyChanged();
         }

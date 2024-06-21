@@ -6,6 +6,7 @@ using ChatClient.Services;
 using ChatClient.ViewModels.Abstract;
 using ChatAPI.Models;
 using System.Reactive.Linq;
+using System.Linq;
 
 namespace ChatClient.ViewModels;
 
@@ -53,16 +54,19 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
             SendMessage();
             MessageText = string.Empty;
 
+
         }, isMessageInputValid);
 
         _startEditMessageCommand = ReactiveCommand.Create(() =>
         {
             IsEditMode = true;
+            if (_selectedMessageVm != null)
+                MessageText = _selectedMessageVm.Text;
         }, isOwnedByUser);
 
         _editMessageCommand = ReactiveCommand.Create(() =>
         {
-            EditMesage();
+            EditMessage();
             IsEditMode = false;
             MessageText = string.Empty;
         }, Observable.Merge(isMessageInputValid, isOwnedByUser));
@@ -90,17 +94,20 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
 
         _deleteSelectedMessageCommand = ReactiveCommand.Create(() =>
         {
-            if (_chat == null)
+            if (_selectedMessageVm == null)
                 return;
 
-            _chatService.RenameChat(_chat.Id, _name);
+            _chatService.DeleteMessage(_selectedMessageVm.MessageId);
         });
 
         _chatService.UserInitialized += _chatService_UserInitialized;
         _chatService.MessageReceived += _chatService_MessageReceived;
         _chatService.ChatRenamed += _chatService_ChatRenamed;
         _chatService.ChatHasReselected += _chatService_ChatHasReselected;
+        _chatService.MessageEdited += _chatService_MessageEdited; ;
+        _chatService.MessageDeleted += _chatService_MessageDeleted;
     }
+
 
     private void SendMessage() 
     {
@@ -113,13 +120,35 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
         _chatService.SendMessage(message);
     }
 
-    private void EditMesage() 
+    private void EditMessage() 
     {
         if (_selectedMessageVm == null || !IsMessageSelected)
             return;
 
         _chatService.EditMessage(_selectedMessageVm.MessageId, MessageText);
     }
+
+    private void _chatService_MessageEdited(object? sender, Message message)
+    {
+        var messageVm = _messages.FirstOrDefault(mvm => mvm.MessageId == message.Id);
+
+        if (messageVm == null)
+            return;
+
+        messageVm.UpdateModel(message);
+    }
+
+    private void _chatService_MessageDeleted(object? sender, Guid id)
+    {
+        var messageToRemove = _messages.FirstOrDefault(mvm => mvm.MessageId == id);
+
+        if(messageToRemove != null)
+            _messages.Remove(messageToRemove);
+
+        if (_selectedMessageVm != null && _selectedMessageVm.MessageId == id)
+            SelectedMessageVm = null!;
+    }
+
 
     private void _chatService_ChatRenamed(object? sender, Chat chat)
     {
@@ -194,7 +223,11 @@ internal class ChatViewModel : ViewModelBase, IChatViewModel, IDisposable
     public bool IsEditMode
     {
         get => _isEditMode;
-        set => this.RaiseAndSetIfChanged(ref _isEditMode, value);
+        set 
+        {
+            this.RaiseAndSetIfChanged(ref _isEditMode, value);
+            this.RaisePropertyChanged(nameof(OnTextBoxEnterCommand));
+        }
     }
 
     public bool IsMessageSelected => _selectedMessageVm != null;

@@ -76,8 +76,8 @@
 						VerticalAlignment="Bottom"
 						Classes.sendMessageMode="{Binding !IsEditMode}"
 						Classes.editMessageMode="{Binding IsEditMode}">
-				<Button>Save</Button>
-				<Button>Cancel</Button>
+				<Button Command="{Binding EditMessageCommand}">Save</Button>
+				<Button Command="{Binding CancelEditingCommand}">Cancel</Button>
 			</StackPanel>
 			
 			

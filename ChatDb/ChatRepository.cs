@@ -107,6 +107,16 @@ public class ChatRepository : IChatRepository, IDisposable
         await _context.SaveChangesAsync();
     }
 
+    public async Task UpdateMessage(Guid messageId, string newText)
+    {
+        var message = await GetMessageByIdAsync(messageId);
+        if (message == null)
+            return;
+
+        message.Text = newText;
+        await _context.SaveChangesAsync();
+    }
+
     public async Task UpdateChatName(Guid chatId, string newName) 
     {
         var chat = await GetChatByIdAsync(chatId);
@@ -114,6 +124,17 @@ public class ChatRepository : IChatRepository, IDisposable
             return;
 
         chat.Name = newName;
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteMessage(Guid messageId)
+    {
+        var message = await GetMessageByIdAsync(messageId);
+        if (message == null)
+            return;
+
+        _context.Messages.Remove(message);
+
         await _context.SaveChangesAsync();
     }
 
